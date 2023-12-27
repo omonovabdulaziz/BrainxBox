@@ -1,0 +1,43 @@
+version: '3'
+services:
+  postgres:
+    container_name: first-container
+    image: "postgres:15"
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: first_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: omonov2006
+
+  python-app:
+    container_name: python-app-container
+    build:
+      context: ./fastApiProject
+    ports:
+      - "8000:8000"
+    restart: always
+
+  spring-app:
+    container_name: spring-app-container
+    build:
+      context: ./BrainBox
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - python-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/first_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: omonov2006
+      fast.url: http://python-app-container:8000
+  telegrambot:
+    container_name: telegrambot-container
+    build:
+      context: ./telegramobot
+    restart: always
+    ports:
+      - "3000:3000"
