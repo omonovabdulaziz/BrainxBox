@@ -15,7 +15,7 @@ const add_subtitle = async (chatId, id) => {
                 url: `https://api.telegram.org/file/bot${process.env.TOKEN}/${file.file_path}`,
                 responseType: 'arraybuffer',
             });
-            await bot.sendMessage(chatId, 'Iltimos kuting subtitle o`zlashtirilmoqda ... ')
+             await bot.sendMessage(chatId, 'Iltimos kuting subtitle o`zlashtirilmoqda ... ')
             const formData = new FormData();
             formData.append('file', response.data, {filename: 'subtitle_file.txt'});
 
@@ -33,7 +33,7 @@ const add_subtitle = async (chatId, id) => {
                 params: requestData,
             });
 
-            bot.sendMessage(chatId, 'Subtitle file uploaded successfully.');
+            await bot.sendMessage(chatId, 'Subtitle file uploaded successfully.');
         });
     } else {
         bot.sendMessage(chatId, 'Damingni ol');

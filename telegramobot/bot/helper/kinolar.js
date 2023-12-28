@@ -251,7 +251,7 @@ const delete_movie = async (chatId, id) => {
 }
 
 const askForEditInformation = async (chatId) => {
-    const questions = ['Ism:', 'Tavsif:', 'Narxi:', 'Daraja(INTERMEDIATE , BEGINNER , ELEMENTRY , UPPER_INTERMEDIATE ):', 'Yosh chegarasi:', 'Serial ID:', 'Rasm URL manzili:', 'Kino janri:'];
+    const questions = ['Ism:', 'Tavsif:', 'Narxi:', 'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTRY</code> <code>UPPER_INTERMEDIATE</code>', 'Yosh chegarasi:', 'Serial ID:', 'Rasm URL manzili:', 'Kino janri:'];
 
     let answers = [];
 
