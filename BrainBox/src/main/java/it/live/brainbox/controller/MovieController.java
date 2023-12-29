@@ -62,8 +62,8 @@ public class MovieController {
         return movieService.deleteMovie(movie);
     }
     @GetMapping("/search-movie")
-    public List<Movie> searchMovie(@RequestParam String keyWord, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
-        return movieService.searchMovie(keyWord, page, pageSize);
+    public List<Movie> searchMovie(@RequestParam String keyWord) {
+        return movieService.searchMovie(keyWord);
     }
     //requests
     @PreAuthorize("hasRole('ROLE_USER')")

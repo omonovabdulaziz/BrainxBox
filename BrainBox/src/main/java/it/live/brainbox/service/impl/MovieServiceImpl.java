@@ -154,15 +154,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> searchMovie(String keyWord, int page, int pageSize) {
+    public List<Movie> searchMovie(String keyWord) {
         User user = SecurityConfiguration.getOwnSecurityInformation();
         List<Movie> movies = new ArrayList<>();
         for (Movie movie : movieRepository.findAllByNameLikeIgnoreCase("%" + keyWord + "%").stream().toList()) {
-            if (boughtMovieRepository.existsByUserIdAndMovieId(user.getId(), movie.getId())) {
-                movie.setIsBought(true);
-            } else {
-                movie.setIsBought(false);
-            }
+            movie.setIsBought(boughtMovieRepository.existsByUserIdAndMovieId(user.getId(), movie.getId()));
             movies.add(movie);
         }
         if (movies.isEmpty()) {
