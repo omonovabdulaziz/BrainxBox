@@ -1,16 +1,12 @@
 package it.live.brainbox.controller;
 
 import it.live.brainbox.payload.ApiResponse;
-import it.live.brainbox.payload.BoughtMovieDTO;
 import it.live.brainbox.service.BoughtService;
-import jakarta.persistence.Transient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/bought-movie")
@@ -18,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoughtMovieController {
     private final BoughtService boughtService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @Transactional
     @PostMapping("/buy")
-    public ResponseEntity<ApiResponse> buy(@RequestBody BoughtMovieDTO boughtMovieDTO) {
-        return boughtService.buy(boughtMovieDTO);
+    public ResponseEntity<ApiResponse> buy(@RequestParam Long movieId) {
+        return boughtService.buy(movieId);
     }
 }

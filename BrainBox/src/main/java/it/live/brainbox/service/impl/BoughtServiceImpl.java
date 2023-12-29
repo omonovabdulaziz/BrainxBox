@@ -1,12 +1,12 @@
 package it.live.brainbox.service.impl;
 
+import it.live.brainbox.config.SecurityConfiguration;
 import it.live.brainbox.entity.BoughtMovie;
 import it.live.brainbox.entity.Movie;
 import it.live.brainbox.entity.User;
 import it.live.brainbox.exception.MainException;
 import it.live.brainbox.exception.NotFoundException;
 import it.live.brainbox.payload.ApiResponse;
-import it.live.brainbox.payload.BoughtMovieDTO;
 import it.live.brainbox.repository.BoughtMovieRepository;
 import it.live.brainbox.repository.MovieRepository;
 import it.live.brainbox.repository.UserRepository;
@@ -24,10 +24,10 @@ public class BoughtServiceImpl implements BoughtService {
     private final BoughtMovieRepository boughtMovieRepository;
 
     @Override
-    public ResponseEntity<ApiResponse> buy(BoughtMovieDTO boughtMovieDTO) {
-        User user = userRepository.findById(boughtMovieDTO.getUserId()).orElseThrow(() -> new NotFoundException("No such users exists"));
-        Movie movie = movieRepository.findById(boughtMovieDTO.getMovieId()).orElseThrow(() -> new NotFoundException("No such movie exists"));
-        if (boughtMovieRepository.existsByUserIdAndMovieId(user.getId() , movie.getId()))
+    public ResponseEntity<ApiResponse> buy(Long movieId) {
+        User user = SecurityConfiguration.getOwnSecurityInformation();
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new NotFoundException("No such movie exists"));
+        if (boughtMovieRepository.existsByUserIdAndMovieId(user.getId(), movie.getId()))
             throw new MainException("You already unlocked this movie");
         user.setCoins(user.getCoins() - movie.getPrice());
         userRepository.save(user);

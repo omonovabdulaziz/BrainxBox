@@ -54,7 +54,6 @@ it\live\brainbox\service\PremiumService.class
 it\live\brainbox\service\impl\SerialServiceImpl.class
 it\live\brainbox\payload\LanguageDTO.class
 it\live\brainbox\payload\PageSender.class
-it\live\brainbox\payload\BoughtMovieDTO.class
 it\live\brainbox\payload\LanguageDTO$LanguageDTOBuilder.class
 it\live\brainbox\repository\PremiumRepository.class
 it\live\brainbox\payload\SubtitleWordPyDTO.class
@@ -75,7 +74,6 @@ it\live\brainbox\service\LanguageService.class
 it\live\brainbox\payload\Pronunciation$PronunciationBuilder.class
 it\live\brainbox\controller\BoughtMovieController.class
 it\live\brainbox\entity\enums\Level.class
-it\live\brainbox\payload\BoughtMovieDTO$BoughtMovieDTOBuilder.class
 it\live\brainbox\entity\temp\AbsLongEntity.class
 it\live\brainbox\service\impl\AuthServiceImpl.class
 it\live\brainbox\mapper\UserMapper.class
