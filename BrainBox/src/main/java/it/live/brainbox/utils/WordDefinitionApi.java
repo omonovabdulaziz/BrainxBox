@@ -80,15 +80,13 @@ public class WordDefinitionApi {
         return CompletableFuture.runAsync(() -> {
             try {
                 String word = subtitleWordPyDTO.getWord();
-                WordDefinitionApiDTO wordDefinitionApi = restTemplate.getForObject(
-                        wordApiUrl + word + "/definitions?when=2023-11-12T18:45:37.334Z&encrypted=" + wordApiHack, WordDefinitionApiDTO.class);
                 Pronunciation pronunciation = restTemplate.getForObject(
                         wordApiUrl + word + "/pronunciation?when=2023-11-12T18:45:37.334Z&encrypted=" + wordApiHack, Pronunciation.class);
 
-                subtitleRepository.save(subtitleMapper.toEntity(subtitleWordPyDTO, wordDefinitionApi, pronunciation, movieId, languageId));
+                subtitleRepository.save(subtitleMapper.toEntity(subtitleWordPyDTO, pronunciation, movieId, languageId));
 
             } catch (Exception e) {
-                subtitleRepository.save(subtitleMapper.toEntity(subtitleWordPyDTO, null, null, movieId, languageId));
+                subtitleRepository.save(subtitleMapper.toEntity(subtitleWordPyDTO, null, movieId, languageId));
             }
         });
     }

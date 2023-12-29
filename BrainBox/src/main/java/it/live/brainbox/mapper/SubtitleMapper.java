@@ -18,12 +18,12 @@ public class SubtitleMapper {
     private final MovieRepository movieRepository;
     private final LanguageRepository languageRepository;
 
-    public SubtitleWord toEntity(SubtitleWordPyDTO subtitleWordPyDTO, WordDefinitionApiDTO wordDefinitionApiDTO, Pronunciation pronunciation, Long movieId, Long languageId) {
+    public SubtitleWord toEntity(SubtitleWordPyDTO subtitleWordPyDTO, Pronunciation pronunciation, Long movieId, Long languageId) {
         return SubtitleWord.builder()
                 .count(subtitleWordPyDTO.getCount())
                 .value(subtitleWordPyDTO.getWord())
                 .secondLanguageValue(subtitleWordPyDTO.getTranslation())
-                .definition(String.valueOf(wordDefinitionApiDTO != null ? wordDefinitionApiDTO.getDefinitions() : null))
+                .definition(null)
                 .pronunciation(String.valueOf(pronunciation != null ? pronunciation.getPronunciation() : null))
                 .movie(movieRepository.findById(movieId).orElseThrow(() -> new NotFoundException("No such movie exists")))
                 .language(languageRepository.findById(languageId).orElseThrow(() -> new NotFoundException("No such language exists")))
