@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserMapper {
     public User toEntity(UserDTO userDTO) {
-        return User.builder().coins(300).imageUrl(userDTO.getImageUrl()).email(userDTO.getEmail()).systemRoleName(SystemRoleName.ROLE_USER).enabled(true).isAccountNonExpired(true).isAccountNonLocked(true).isCredentialsNonExpired(true).name(userDTO.getName()).surname(userDTO.getSurname()).uniqueId(userDTO.getUniqueId()).build();
+        return User.builder().isPremium(false).coins(300).imageUrl(userDTO.getImageUrl()).email(userDTO.getEmail()).systemRoleName(SystemRoleName.ROLE_USER).enabled(true).isAccountNonExpired(true).isAccountNonLocked(true).isCredentialsNonExpired(true).name(userDTO.getName()).surname(userDTO.getSurname()).uniqueId(userDTO.getUniqueId()).build();
     }
 }
