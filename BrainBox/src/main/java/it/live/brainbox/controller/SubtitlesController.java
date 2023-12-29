@@ -6,6 +6,7 @@ import it.live.brainbox.payload.PageSender;
 import it.live.brainbox.service.SubtitleService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class SubtitlesController {
 
 
     @GetMapping("/getWordsByCount")
-    public PageSender<?> getWordsByCount(@RequestParam(value = "language") long languageId, @RequestParam("movieId") long movieId, @RequestParam int page, @RequestParam int size) {
+    public Page<?> getWordsByCount(@RequestParam(value = "language") long languageId, @RequestParam("movieId") long movieId, @RequestParam int page, @RequestParam int size) {
         return subtitleService.getWordsByCount(languageId, movieId, page, size);
     }
 
