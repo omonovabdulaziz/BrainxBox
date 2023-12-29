@@ -9,8 +9,10 @@ import it.live.brainbox.repository.SubtitleRepository;
 import it.live.brainbox.service.SubtitleService;
 import it.live.brainbox.utils.WordDefinitionApi;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +25,6 @@ import java.util.List;
 public class SubtitleServiceImpl implements SubtitleService {
     private final SubtitleRepository subtitleRepository;
     private final WordDefinitionApi wordDefinitionApi;
-    private final SubtitleMapper subtitleMapper;
 
     @Override
     public ResponseEntity<ApiResponse> deleteSubtitle(Long movieId, Long languageId) {
@@ -32,9 +33,8 @@ public class SubtitleServiceImpl implements SubtitleService {
     }
 
     @Override
-    public PageSender<?> getWordsByCount(long languageId, int count, long movieId, int page, int size) {
-        List<SubtitleWordDTO> list = subtitleRepository.getSubtitleWordsByAny(movieId, languageId, count, PageRequest.of(page, size)).stream().map(subtitleMapper::toDTO).toList();
-        return new PageSender<>(subtitleRepository.getSubtitleWordsByAny(movieId, languageId, count).size(), list);
+    public PageSender<?> getWordsByCount(long languageId, long movieId, int page, int size) {
+        return new PageSender<>(subtitleRepository.findAll().size(), subtitleRepository.findAll(PageRequest.of(page, size, Sort.by("count").ascending())));
     }
 
     @Override
