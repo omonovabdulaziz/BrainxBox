@@ -16,6 +16,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     Page<Movie> findAllByGenre(String genre, Pageable pageable);
     Page<Movie> findAllByLevel(Level level, Pageable pageable);
     List<Movie> findAllBySerialId(Long serial_id);
-    Collection<Movie> findAllByNameLikeIgnoreCase(String s, PageRequest of);
-
+    List<Movie> findAllByNameLikeIgnoreCase(String s);
 }

@@ -63,7 +63,7 @@ public class MovieServiceImpl implements MovieService {
             movie.setName(movieDTO.getName());
             movie.setAvatarUrl(movieDTO.getUpdateImageUrl());
             movie.setGenre(movieDTO.getUpdateImageGenre());
-        }else {
+        } else {
             if (!Objects.equals(movie.getName(), movieDTO.getName())) {
                 movie.setName(movieDTO.getName());
                 List<String> imageOfMovie = getImageOfMovie(movieDTO.getName());
@@ -85,7 +85,7 @@ public class MovieServiceImpl implements MovieService {
 
 
     @Override
-    public Page<?> getAllMoviePage(int page, int size, Level level, String genre , boolean noSubtitle) {
+    public Page<?> getAllMoviePage(int page, int size, Level level, String genre, boolean noSubtitle) {
         User user = SecurityConfiguration.getOwnSecurityInformation();
         Page<Movie> movies;
         if (level != null) {
@@ -93,7 +93,7 @@ public class MovieServiceImpl implements MovieService {
         } else if (genre != null) {
             movies = movieRepository.findAllByGenre(genre, of(page, size));
         } else if (noSubtitle) {
-            movies = movieRepository.findAll(PageRequest.of(page , size , Sort.by("createdAt").descending()));
+            movies = movieRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
         } else {
             movies = movieRepository.findAll(of(page, size));
         }
@@ -154,12 +154,21 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Page<?> searchMovie(String keyWord, int page, int pageSize) {
-        List<Movie> list = movieRepository.findAllByNameLikeIgnoreCase("%" + keyWord + "%", of(page, pageSize)).stream().toList();
-        if (list.isEmpty()) {
+    public List<Movie> searchMovie(String keyWord, int page, int pageSize) {
+        User user = SecurityConfiguration.getOwnSecurityInformation();
+        List<Movie> movies = new ArrayList<>();
+        for (Movie movie : movieRepository.findAllByNameLikeIgnoreCase("%" + keyWord + "%").stream().toList()) {
+            if (boughtMovieRepository.existsByUserIdAndMovieId(user.getId(), movie.getId())) {
+                movie.setIsBought(true);
+            } else {
+                movie.setIsBought(false);
+            }
+            movies.add(movie);
+        }
+        if (movies.isEmpty()) {
             throw new NotFoundException("There is no movie with this name If you want it, please share the name of the movie with us");
         }
-        return movieRepository.findAllByGenre(list.get(0).getGenre(), of(page, pageSize - list.size()));
+        return movies;
     }
 
     @Override
