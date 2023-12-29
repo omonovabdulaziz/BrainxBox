@@ -34,6 +34,7 @@ public class PremiumServiceImpl implements PremiumService {
         }
         systemUser.setIsPremium(true);
         premiumRepository.save(PremiumUser.builder().user(systemUser).premiumDate(LocalDate.now()).build());
+        userRepository.save(systemUser);
         return ResponseEntity.ok(ApiResponse.builder().status(200).message("success").build());
     }
 
