@@ -1,7 +1,7 @@
 const axios = require('axios');
 const {bot} = require('../bot');
 
-let pageCalc = 0;
+let pageCalc = 0
 let deleteCounter = '';
 let pageAbleCalc     = 0
 
