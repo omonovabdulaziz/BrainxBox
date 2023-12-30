@@ -15,7 +15,6 @@ const add_subtitle = async (chatId, id) => {
                 url: `https://api.telegram.org/file/bot${process.env.TOKEN}/${file.file_path}`,
                 responseType: 'arraybuffer',
             });
-             await bot.sendMessage(chatId, 'Iltimos kuting subtitle o`zlashtirilmoqda ... ')
             const formData = new FormData();
             formData.append('file', response.data, {filename: 'subtitle_file.txt'});
 
@@ -31,10 +30,9 @@ const add_subtitle = async (chatId, id) => {
             await axios.post(`${process.env.MAINAPI}/api/v1/subtitleWords/addSubtitle/${id}`, formData, {
                 headers,
                 params: requestData,
-            });
-
-            await bot.sendMessage(chatId, 'Subtitle file uploaded successfully.');
+            })
         });
+        bot.sendMessage(chatId, 'Subtitle uploaded successfully')
     } else {
         bot.sendMessage(chatId, 'Damingni ol');
     }
