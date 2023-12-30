@@ -11,4 +11,5 @@ import java.util.UUID;
 public class SavedWordDto {
     private UUID id;
     private String value;
+    private String translateWord;
 }

@@ -23,8 +23,8 @@ public class SavedWordServiceImpl implements SavedWordService {
     private final SaveWordMapper saveWordMapper;
 
     @Override
-    public ResponseEntity<ApiResponse> add(String word) {
-        savedWordRepository.save(SavedWord.builder().value(word).user(SecurityConfiguration.getOwnSecurityInformation()).build());
+    public ResponseEntity<ApiResponse> add(String word , String translateWord) {
+        savedWordRepository.save(SavedWord.builder().translateWord(translateWord).value(word).user(SecurityConfiguration.getOwnSecurityInformation()).build());
         return ResponseEntity.ok(ApiResponse.builder().status(201).message("Success").build());
     }
 

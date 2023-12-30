@@ -20,8 +20,8 @@ public class SavedWordController {
     private final SavedWordService savedWordService;
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> add(@RequestParam String word) {
-        return savedWordService.add(word);
+    public ResponseEntity<ApiResponse> add(@RequestParam String word , @RequestParam String translateWord) {
+        return savedWordService.add(word , translateWord);
     }
 
     @Transactional

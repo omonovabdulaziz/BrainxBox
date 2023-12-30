@@ -19,4 +19,6 @@ public class SavedWord extends AbsUUIDEntity {
     private User user;
     @Column(nullable = false)
     private String value;
+    @Column(nullable = false)
+    private String translateWord;
 }

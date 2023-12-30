@@ -3,7 +3,7 @@ const {bot} = require('../bot');
 
 let pageCalc = 0;
 let deleteCounter = '';
-let pageAbleCalc = 0
+let pageAbleCalc     = 0
 
 
 

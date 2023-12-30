@@ -11,6 +11,7 @@ public class SaveWordMapper {
 
     public SavedWordDto toDTO(SavedWord savedWord) {
         return SavedWordDto.builder()
+                .translateWord(savedWord.getTranslateWord())
                 .id(savedWord.getId())
                 .value(savedWord.getValue()).build();
     }

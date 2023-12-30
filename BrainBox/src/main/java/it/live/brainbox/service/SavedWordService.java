@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface SavedWordService {
-    ResponseEntity<ApiResponse> add(String word);
+    ResponseEntity<ApiResponse> add(String word , String translateWord);
 
     ResponseEntity<ApiResponse> delete(UUID id);
 
