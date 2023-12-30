@@ -31,8 +31,9 @@ const add_subtitle = async (chatId, id) => {
                 headers,
                 params: requestData,
             })
+            bot.sendMessage(chatId, 'Subtitle uploaded successfully')
         });
-        bot.sendMessage(chatId, 'Subtitle uploaded successfully')
+
     } else {
         bot.sendMessage(chatId, 'Damingni ol');
     }

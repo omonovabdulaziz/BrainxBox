@@ -1,8 +1,10 @@
 package it.live.brainbox.config;
 
+import it.live.brainbox.entity.Language;
 import it.live.brainbox.entity.User;
 import it.live.brainbox.entity.enums.SystemRoleName;
 import it.live.brainbox.jwt.JwtProvider;
+import it.live.brainbox.repository.LanguageRepository;
 import it.live.brainbox.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +18,7 @@ import java.util.Objects;
 public class DataLoaderConfig implements CommandLineRunner {
     private final UserRepository userRepository;
     private final JwtProvider jetProvider;
+    private final LanguageRepository languageRepository;
 
 
     @Value("${spring.sql.init.mode}")
@@ -25,8 +28,10 @@ public class DataLoaderConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (Objects.equals(sqlInitMode, "always")) {
             userRepository.save(User.builder().isPremium(true).name("Abdulaziz").email("omonov2006omonov@gmail.com").surname("Omonov").systemRoleName(SystemRoleName.ROLE_ADMIN).enabled(true).isAccountNonExpired(true).isAccountNonLocked(true).isCredentialsNonExpired(true).uniqueId("omonov2006").coins(0).build());
+            languageRepository.save(Language.builder().name("ENGLISH").build());
+            System.out.println("Til qo'shildi");
             jetProvider.generateToken("omonov2006omonov@gmail.com");
-            System.out.println("_A_D_M_I_N_S_A_Q_L_A_N_D_I  " );
+            System.out.println("_A_D_M_I_N_S_A_Q_L_A_N_D_I  ");
         }
     }
 
