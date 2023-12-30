@@ -19,11 +19,13 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\exception\NotFoundException.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\config\SecurityConfiguration.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\SerialRepository.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\SavedWordService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\MovieDTO.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\EnumController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\UserController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\UserRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\BrainBoxApplication.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\SavedWordDto.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\SubtitlesController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\BoughtMovieController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\LanguageDTO.java
@@ -39,6 +41,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\AuthController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\SubtitleWord.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\temp\AbsLongEntity.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\SavedWord.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\config\DataLoaderConfig.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\SerialService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\User.java
@@ -64,7 +67,11 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\SubtitleWordPyDTO.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\SerialController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\PremiumRepository.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\SavedWordController.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\SavedWordServiceImpl.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\SavedWordRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\SubtitleRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\Pronunciation.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\BoughtMovieRepository.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\mapper\SaveWordMapper.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\WordDefinitionApiDTO.java

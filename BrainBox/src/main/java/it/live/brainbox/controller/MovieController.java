@@ -24,8 +24,8 @@ public class MovieController {
     private final MovieService movieService;
 
     @GetMapping("/getAllMoviePage")
-    public Page<?> getAllMoviePage(@RequestParam int page, @RequestParam int size, @RequestParam(value = "level", required = false) Level level, @RequestParam(value = "genre", required = false) String genre , @RequestParam(required = false) boolean noSubtitle ) {
-        return movieService.getAllMoviePage(page, size, level, genre , noSubtitle);
+    public Page<?> getAllMoviePage(@RequestParam int page, @RequestParam int size, @RequestParam(value = "level", required = false) Level level, @RequestParam(value = "genre", required = false) String genre, @RequestParam(required = false) boolean noSubtitle) {
+        return movieService.getAllMoviePage(page, size, level, genre, noSubtitle);
     }
 
     @GetMapping("/getMovie/{movieId}")
@@ -38,7 +38,6 @@ public class MovieController {
     public List<Movie> getMovieBySerialId(@PathVariable Long serialId) {
         return movieService.getAllMovieBySerialId(serialId);
     }
-
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -61,11 +60,12 @@ public class MovieController {
     public ResponseEntity<ApiResponse> deleteMovie(@PathVariable Long movie) {
         return movieService.deleteMovie(movie);
     }
+
     @GetMapping("/search-movie")
     public List<Movie> searchMovie(@RequestParam String keyWord) {
         return movieService.searchMovie(keyWord);
     }
-    //requests
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/addRequestMovie")
     public ResponseEntity<ApiResponse> addRequestMovie(@RequestParam String request) {

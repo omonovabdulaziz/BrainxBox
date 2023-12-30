@@ -22,6 +22,7 @@ public abstract class AbsUUIDEntity {
     private UUID id;
     @CreationTimestamp
     @Column(updatable = false)
+    @JsonIgnore
     private LocalDateTime createdAt;
     @UpdateTimestamp
     @JsonIgnore

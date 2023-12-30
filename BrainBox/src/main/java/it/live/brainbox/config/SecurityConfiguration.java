@@ -48,9 +48,7 @@ public class SecurityConfiguration {
         })).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth ->
                 auth
                         .requestMatchers("/api/v1/auth/**",
-                                "/swagger-ui/**",
-                                "/api/v1/movie/**",
-                                "/api/v1/serial/**").permitAll()
+                                "/swagger-ui/**").permitAll()
                         .anyRequest()
                         .authenticated());
         httpSecurity.sessionManagement(httpsecure -> httpsecure.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
