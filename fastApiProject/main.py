@@ -1,7 +1,8 @@
-import json
 import re
 from collections import Counter
-from fastapi import FastAPI, UploadFile, Form, File
+
+import uvicorn
+from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 from deep_translator import GoogleTranslator
 from tqdm import tqdm
@@ -10,8 +11,12 @@ import concurrent.futures
 
 app = FastAPI()
 
+EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's"}
+
 
 def is_english_word(word):
+    if word in EXCLUDED_WORDS:
+        return False
     try:
         language = detect(word)
         return language in ['en', 'eng']
@@ -35,20 +40,17 @@ def remove_non_english_words(data):
 
 
 class TranslationEntry:
-    def __init__(self, word, count, translation):
+    def __init__(self, word, count, translation_en, translation_ru):
         self.word = word
         self.count = count
-        self.translation = translation
-
-
-def translate_word(word, count):
-    translation = GoogleTranslator(source='en', target='uz').translate(word)
-    return TranslationEntry(word, count, translation)
+        self.translation_en = translation_en
+        self.translation_ru = translation_ru
 
 
 def translate_word_threaded(word, count):
-    translation = GoogleTranslator(source='en', target='uz').translate(word)
-    return TranslationEntry(word, count, translation)
+    translation_en = GoogleTranslator(source='en', target='uz').translate(word)
+    translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
+    return TranslationEntry(word, count, translation_en, translation_ru)
 
 
 def translate(data):
@@ -59,36 +61,35 @@ def translate(data):
     with tqdm(total=len(data['word_count'])) as pbar:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = [executor.submit(translate_word_threaded, word, count) for word, count in
-                       data['word_count'].items()]
+                       data['word_count'].items() if word not in translated_words]
 
             for future in concurrent.futures.as_completed(futures):
                 entry = future.result()
                 if entry.word not in translated_words:
                     translated_entries[entry.word] = entry
                     translated_words.add(entry.word)
-                else:
-                    # If the word is already translated, update the count
-                    translated_entries[entry.word].count += entry.count
                 pbar.update(1)
 
     return list(translated_entries.values())
 
 
-def write_to_file(content, file_name):
-    with open(f'{file_name}.json', 'w', encoding='utf-8') as json_file:
-        json.dump(content, json_file, ensure_ascii=False, indent=4)
+def try_different_encodings(file_content):
+    encodings = ['utf-8', 'windows-1252', 'ISO-8859-1']
+    for encoding in encodings:
+        try:
+            return file_content.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    raise UnicodeDecodeError("Could not decode with any of the provided encodings.")
 
 
 @app.post("/uploadSubtitle")
 async def upload_subtitle(
-        movie_id: int = Form(...),
-        language_id: int = Form(...),
         subtitle_file: UploadFile = File(...),
 ):
     try:
         content = await subtitle_file.read()
-
-        cleaned_text = content.decode('utf-8')
+        cleaned_text = try_different_encodings(content)
 
         word_count_data = count_word_occurrences(cleaned_text)
         english_word_count_data = remove_non_english_words(word_count_data)
@@ -100,3 +101,8 @@ async def upload_subtitle(
 
     except Exception as e:
         return JSONResponse(content={"message": f"Error processing file: {str(e)}"}, status_code=500)
+
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

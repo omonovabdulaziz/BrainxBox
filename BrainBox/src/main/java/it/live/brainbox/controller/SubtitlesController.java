@@ -21,7 +21,7 @@ public class SubtitlesController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addSubtitle/{movieId}")
     public ResponseEntity<ApiResponse> addSubtitle(@PathVariable Long movieId, @RequestParam MultipartFile file, @RequestParam Long languageId) {
-        return subtitleService.addSubtitle(movieId, file, languageId);
+        return subtitleService.addSubtitle(movieId, file);
     }
 
 
@@ -29,20 +29,20 @@ public class SubtitlesController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/updateSubtitle/{movieId}")
     public ResponseEntity<ApiResponse> updateSubtitle(@PathVariable Long movieId, @RequestParam Long languageId, @RequestParam MultipartFile file) {
-        return subtitleService.updateSubtitle(movieId, languageId, file);
+        return subtitleService.updateSubtitle(movieId, file);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/deleteSubtitle/{movieId}")
     public ResponseEntity<ApiResponse> deleteSubtitle(@PathVariable Long movieId, @RequestParam Long languageId) {
-        return subtitleService.deleteSubtitle(movieId, languageId);
+        return subtitleService.deleteSubtitle(movieId);
     }
 
 
     @GetMapping("/getWordsByCount")
     public Page<?> getWordsByCount(@RequestParam(value = "language") long languageId, @RequestParam("movieId") long movieId, @RequestParam int page, @RequestParam int size) {
-        return subtitleService.getWordsByCount(languageId, movieId, page, size);
+        return subtitleService.getWordsByCount(movieId, page, size);
     }
 
 }

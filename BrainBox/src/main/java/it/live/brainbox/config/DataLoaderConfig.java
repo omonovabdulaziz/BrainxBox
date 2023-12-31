@@ -29,9 +29,9 @@ public class DataLoaderConfig implements CommandLineRunner {
         if (Objects.equals(sqlInitMode, "always")) {
             userRepository.save(User.builder().isPremium(true).name("Abdulaziz").email("omonov2006omonov@gmail.com").surname("Omonov").systemRoleName(SystemRoleName.ROLE_ADMIN).enabled(true).isAccountNonExpired(true).isAccountNonLocked(true).isCredentialsNonExpired(true).uniqueId("omonov2006").coins(0).build());
             languageRepository.save(Language.builder().name("ENGLISH").build());
-            System.out.println("Til qo'shildi");
+            languageRepository.save(Language.builder().name("RUSSIAN").build());
             jetProvider.generateToken("omonov2006omonov@gmail.com");
-            System.out.println("_A_D_M_I_N_S_A_Q_L_A_N_D_I  ");
+            System.out.println("MALUMOTLAR SAQLANDI");
         }
     }
 

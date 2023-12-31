@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class SubtitleWordPyDTO {
     private String word;
     private Integer count;
-    private String translation;
-
+    private String translation_en;
+    private String translation_ru;
 }

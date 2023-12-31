@@ -8,12 +8,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface SubtitleService {
 
-    ResponseEntity<ApiResponse> deleteSubtitle(Long movieId , Long  languageId);
+    ResponseEntity<ApiResponse> deleteSubtitle(Long movieId);
 
-    Page<?> getWordsByCount(long languageId , long movieId , int page , int size);
+    Page<?> getWordsByCount(long movieId , int page , int size);
 
-    ResponseEntity<ApiResponse> addSubtitle(Long movieId, MultipartFile file , Long languageId);
+    ResponseEntity<ApiResponse> addSubtitle(Long movieId, MultipartFile file);
 
-    ResponseEntity<ApiResponse> updateSubtitle(Long movieId, Long languageId, MultipartFile file);
+    ResponseEntity<ApiResponse> updateSubtitle(Long movieId, MultipartFile file);
 
 }

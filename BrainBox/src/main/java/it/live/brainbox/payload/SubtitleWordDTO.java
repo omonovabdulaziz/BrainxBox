@@ -15,7 +15,7 @@ public class SubtitleWordDTO {
     private Long movieId;
     private Integer count;
     private Long languageId;
-    private String definition;
     private String pronunciation;
-    private String secondLanguageValue;
+    private String translation_ru;
+    private String translation_eng;
 }

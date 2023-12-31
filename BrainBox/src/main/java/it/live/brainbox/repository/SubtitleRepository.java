@@ -11,6 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface SubtitleRepository extends JpaRepository<SubtitleWord, UUID> {
-    void deleteAllByMovieIdAndLanguageId(Long movie_id, Long language_id);
+    void deleteAllByMovieId(Long movie_id);
 
 }

@@ -36,14 +36,12 @@ public class WordDefinitionApi {
 
     private final RestTemplate restTemplate;
 
-    public boolean addSubtitle(Long movieId, MultipartFile file, Long languageId) {
+    public boolean addSubtitle(Long movieId, MultipartFile file) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-            body.add("movie_id", movieId);
-            body.add("language_id", languageId);
             body.add("subtitle_file", new ByteArrayResource(file.getBytes()) {
                 @Override
                 public String getFilename() {
@@ -56,19 +54,13 @@ public class WordDefinitionApi {
             Result apiResponse = restTemplate.postForEntity(
                     fastApiUrl + "/uploadSubtitle", requestEntity, Result.class).getBody();
 
+            assert apiResponse != null;
             List<CompletableFuture<Void>> futureTasks = apiResponse.getResult().stream()
-                    .map(subtitleWordPyDTO -> processSubtitleWordAsync(movieId, languageId, subtitleWordPyDTO))
+                    .map(subtitleWordPyDTO -> processSubtitleWordAsync(movieId, subtitleWordPyDTO))
                     .toList();
 
             CompletableFuture<Void> allOf = CompletableFuture.allOf(futureTasks.toArray(new CompletableFuture[0]));
-
-            allOf.exceptionally(ex -> {
-                ex.printStackTrace();
-                return null;
-            });
-
             allOf.join();
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,17 +68,15 @@ public class WordDefinitionApi {
         }
     }
 
-    private CompletableFuture<Void> processSubtitleWordAsync(Long movieId, Long languageId, SubtitleWordPyDTO subtitleWordPyDTO) {
+    private CompletableFuture<Void> processSubtitleWordAsync(Long movieId, SubtitleWordPyDTO subtitleWordPyDTO) {
         return CompletableFuture.runAsync(() -> {
             try {
                 String word = subtitleWordPyDTO.getWord();
                 Pronunciation pronunciation = restTemplate.getForObject(
                         wordApiUrl + word + "/pronunciation?when=2023-11-12T18:45:37.334Z&encrypted=" + wordApiHack, Pronunciation.class);
-
-                subtitleRepository.save(subtitleMapper.toEntity(subtitleWordPyDTO, pronunciation, movieId, languageId));
-
+                subtitleRepository.save(subtitleMapper.toEntity(subtitleWordPyDTO, pronunciation, movieId));
             } catch (Exception e) {
-                subtitleRepository.save(subtitleMapper.toEntity(subtitleWordPyDTO, null, movieId, languageId));
+                subtitleRepository.save(subtitleMapper.toEntity(subtitleWordPyDTO, null, movieId));
             }
         });
     }

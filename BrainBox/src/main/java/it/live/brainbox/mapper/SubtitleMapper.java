@@ -16,17 +16,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SubtitleMapper {
     private final MovieRepository movieRepository;
-    private final LanguageRepository languageRepository;
 
-    public SubtitleWord toEntity(SubtitleWordPyDTO subtitleWordPyDTO, Pronunciation pronunciation, Long movieId, Long languageId) {
+    public SubtitleWord toEntity(SubtitleWordPyDTO subtitleWordPyDTO, Pronunciation pronunciation, Long movieId) {
         return SubtitleWord.builder()
                 .count(subtitleWordPyDTO.getCount())
                 .value(subtitleWordPyDTO.getWord())
-                .secondLanguageValue(subtitleWordPyDTO.getTranslation())
-                .definition(null)
+                .translation_en(subtitleWordPyDTO.getTranslation_en())
+                .translation_ru(subtitleWordPyDTO.getTranslation_ru())
                 .pronunciation(String.valueOf(pronunciation != null ? pronunciation.getPronunciation() : null))
                 .movie(movieRepository.findById(movieId).orElseThrow(() -> new NotFoundException("No such movie exists")))
-                .language(languageRepository.findById(languageId).orElseThrow(() -> new NotFoundException("No such language exists")))
                 .build();
     }
 
@@ -35,10 +33,9 @@ public class SubtitleMapper {
                 .count(subtitleWord.getCount())
                 .movieId(subtitleWord.getMovie().getId())
                 .value(subtitleWord.getValue())
-                .secondLanguageValue(subtitleWord.getSecondLanguageValue())
-                .definition(subtitleWord.getDefinition())
+                .translation_ru(subtitleWord.getTranslation_ru())
+                .translation_eng(subtitleWord.getTranslation_en())
                 .pronunciation(subtitleWord.getPronunciation())
-                .languageId(subtitleWord.getLanguage().getId())
                 .build();
     }
 }

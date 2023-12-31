@@ -27,28 +27,28 @@ public class SubtitleServiceImpl implements SubtitleService {
     private final WordDefinitionApi wordDefinitionApi;
 
     @Override
-    public ResponseEntity<ApiResponse> deleteSubtitle(Long movieId, Long languageId) {
-        subtitleRepository.deleteAllByMovieIdAndLanguageId(movieId, languageId);
+    public ResponseEntity<ApiResponse> deleteSubtitle(Long movieId) {
+        subtitleRepository.deleteAllByMovieId(movieId);
         return ResponseEntity.ok(ApiResponse.builder().message("All subtitles for this movie in this language have been removed").status(200).build());
     }
 
     @Override
-    public Page<?> getWordsByCount(long languageId, long movieId, int page, int size) {
+    public Page<?> getWordsByCount(long movieId, int page, int size) {
         return subtitleRepository.findAll(PageRequest.of(page, size, Sort.by("count").descending()));
     }
 
     @Override
-    public ResponseEntity<ApiResponse> addSubtitle(Long movieId, MultipartFile file, Long languageId) {
-        if (wordDefinitionApi.addSubtitle(movieId, file, languageId))
+    public ResponseEntity<ApiResponse> addSubtitle(Long movieId, MultipartFile file) {
+        if (wordDefinitionApi.addSubtitle(movieId, file))
             return ResponseEntity.ok(ApiResponse.builder().message("Added subtitles for this movie").status(200).build());
 
         throw new MainException("Error in process for add movie");
     }
 
     @Override
-    public ResponseEntity<ApiResponse> updateSubtitle(Long movieId, Long languageId, MultipartFile file) {
-        subtitleRepository.deleteAllByMovieIdAndLanguageId(movieId, languageId);
-        if (wordDefinitionApi.addSubtitle(movieId, file, languageId))
+    public ResponseEntity<ApiResponse> updateSubtitle(Long movieId, MultipartFile file) {
+        subtitleRepository.deleteAllByMovieId(movieId);
+        if (wordDefinitionApi.addSubtitle(movieId, file))
             return ResponseEntity.ok(ApiResponse.builder().message("This movie subtitles updated").status(200).build());
 
         throw new MainException("Error in process");

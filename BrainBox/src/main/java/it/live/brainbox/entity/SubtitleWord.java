@@ -17,12 +17,9 @@ public class SubtitleWord extends AbsUUIDEntity {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
-    @ManyToOne
-    @JsonIgnore
-    private Language language;
     private Integer count;
     private String pronunciation;
-    @Column(columnDefinition = "text")
-    private String definition;
-    private String secondLanguageValue;
+    private String translation_en;
+    private String translation_ru;
+
 }
