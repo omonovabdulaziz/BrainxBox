@@ -5,8 +5,9 @@ let pageCalc = 0;
 
 const add_subtitle = async (chatId, id) => {
     if (chatId == process.env.ADMINCHATID) {
-        bot.sendMessage(chatId, 'Iltimos subtitleni yuklang');
-        bot.on('document', async (msg) => {
+        await bot.sendMessage(chatId, 'Iltimos subtitleni yuklang');
+
+        bot.once('document', async (msg) => {
             const documentId = msg.document.file_id;
             const file = await bot.getFile(documentId);
 
@@ -16,7 +17,7 @@ const add_subtitle = async (chatId, id) => {
                 responseType: 'arraybuffer',
             });
             const formData = new FormData();
-            formData.append('file', response.data, {filename: 'subtitle_file.txt'});
+            formData.append('file', response.data, { filename: 'subtitle_file.txt' });
 
             const headers = {
                 'Authorization': `Bearer ${process.env.BEKENDTOKEN}`,
@@ -27,17 +28,22 @@ const add_subtitle = async (chatId, id) => {
                 languageId: 1,
             };
 
-            await axios.post(`${process.env.MAINAPI}/api/v1/subtitleWords/addSubtitle/${id}`, formData, {
-                headers,
-                params: requestData,
-            })
-            bot.sendMessage(chatId, 'Subtitle uploaded successfully')
+            try {
+                await axios.post(`${process.env.MAINAPI}/api/v1/subtitleWords/addSubtitle/${id}`, formData, {
+                    headers,
+                    params: requestData,
+                });
+                await bot.sendMessage(chatId, 'Subtitle uploaded successfully');
+            } catch (error) {
+                console.error('Error uploading subtitle:', error);
+            }
         });
 
     } else {
         bot.sendMessage(chatId, 'Damingni ol');
     }
 };
+
 const get_all_movie_for_subtitle = async (chatId, page = 0) => {
     if (chatId == process.env.ADMINCHATID) {
         try {

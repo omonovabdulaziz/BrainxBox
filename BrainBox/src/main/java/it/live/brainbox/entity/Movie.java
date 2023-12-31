@@ -35,4 +35,8 @@ public class Movie extends AbsLongEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<SubtitleWord> subtitleWords;
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<BoughtMovie> boughtMovies;
 }

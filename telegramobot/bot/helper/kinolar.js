@@ -1,12 +1,9 @@
 const axios = require('axios');
 const {bot} = require('../bot');
 
-let pageCalc = 0
+let pageCalc = 0;
 let deleteCounter = '';
-let pageAbleCalc     = 0
-
-
-
+let pageAbleCalc = 0;
 const askForAddingMovie = async (chatId) => {
     const questions = [
         'Ism:',
@@ -18,14 +15,21 @@ const askForAddingMovie = async (chatId) => {
     ];
 
     let answers = [];
+    let lastMessageId = null;
 
     for (let i = 0; i < questions.length; i++) {
+        if (lastMessageId) {
+            await bot.deleteMessage(chatId, lastMessageId).catch(e => console.log('Error deleting message:', e));
+        }
+
+        const question = questions[i];
+        const response = await bot.sendMessage(chatId, question, { parse_mode: 'HTML' });
+        lastMessageId = response.message_id;
+
         if (i === questions.length - 1) {
             const selectedSerialId = await get_all_serials(chatId);
             answers.push(selectedSerialId);
         } else {
-            const question = questions[i];
-            const response = await bot.sendMessage(chatId, question, { parse_mode: 'HTML' });
             const answer = await new Promise((resolve) => {
                 bot.once('text', (msg) => resolve(msg.text));
             });
@@ -43,6 +47,7 @@ const askForAddingMovie = async (chatId) => {
     };
 };
 
+
 const get_all_serials = async (chatId, page = 0) => {
     return new Promise(async (resolve) => {
         if (chatId == process.env.ADMINCHATID) {
@@ -59,8 +64,6 @@ const get_all_serials = async (chatId, page = 0) => {
                 const allResponse = response.data;
                 const serials = allResponse.content;
                 const serialButtons = serials.map(serial => [{ text: serial.name, callback_data: `serial_${serial.id}` }]);
-
-                // Add a special button for not selecting any serial
                 serialButtons.push([{ text: 'Serial tanlanmadi', callback_data: 'no_serial_selection' }]);
 
                 bot.sendMessage(chatId, 'Seriallar ro`yxati', {
@@ -90,10 +93,11 @@ const get_all_serials = async (chatId, page = 0) => {
             }
         } else {
             await bot.sendMessage(chatId, 'Damingni ol');
-            resolve(null); // Resolve with null in case of error or unauthorized access
+            resolve(null); // Unauthorized access
         }
     });
 };
+
 
 const pageableforSerials = async (chatId, action) => {
     if (action === 'next_serial_page_pagination') {
@@ -106,12 +110,12 @@ const pageableforSerials = async (chatId, action) => {
     }
 };
 
+
 const add_movie = async (chatId) => {
     if (process.env.ADMINCHATID == chatId) {
         try {
             const movieInfo = await askForAddingMovie(chatId);
             const apiUrl = process.env.MAINAPI + '/api/v1/movie/addMovie';
-
             const headers = {
                 Authorization: `Bearer ${process.env.BEKENDTOKEN}`, 'Content-Type': 'application/json',
             };
@@ -131,6 +135,7 @@ const add_movie = async (chatId) => {
         bot.sendMessage(chatId, 'Damingni ol');
     }
 };
+
 
 const get_all_movies = async (chatId, page = 0) => {
     if (chatId == process.env.ADMINCHATID) {
@@ -167,6 +172,7 @@ const get_all_movies = async (chatId, page = 0) => {
         bot.sendMessage(chatId, 'Damingni ol');
     }
 };
+
 
 const show_movie = async (chatId, id) => {
     if (chatId == process.env.ADMINCHATID) {
@@ -206,6 +212,7 @@ const show_movie = async (chatId, id) => {
     }
 };
 
+
 const pagination_movie = async (chatId, action) => {
     if (action === 'next_page') {
         pageCalc++
@@ -216,7 +223,9 @@ const pagination_movie = async (chatId, action) => {
     get_all_movies(chatId, pageCalc)
 }
 
+
 const delete_movie = async (chatId, id) => {
+    console.log(id)
     if (chatId == process.env.ADMINCHATID) {
         if (deleteCounter === 'delete_movie') {
             deleteCounter = ''
@@ -250,13 +259,30 @@ const delete_movie = async (chatId, id) => {
     }
 }
 
+
 const askForEditInformation = async (chatId) => {
-    const questions = ['Ism:', 'Tavsif:', 'Narxi:', 'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTRY</code> <code>UPPER_INTERMEDIATE</code>', 'Yosh chegarasi:', 'Serial ID:', 'Rasm URL manzili:', 'Kino janri:'];
+    const questions = [
+        'Ism:',
+        'Tavsif:',
+        'Narxi:',
+        'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTRY</code> <code>UPPER_INTERMEDIATE</code>',
+        'Yosh chegarasi:',
+        'Serial ID:',
+        'Rasm URL manzili:',
+        'Kino janri:',
+    ];
 
     let answers = [];
+    let lastMessageId = null;
 
     for (const question of questions) {
+        if (lastMessageId) {
+            await bot.deleteMessage(chatId, lastMessageId).catch(e => console.log('Error deleting message:', e));
+        }
+
         const response = await bot.sendMessage(chatId, question);
+        lastMessageId = response.message_id;
+
         const answer = await new Promise(resolve => {
             bot.once('text', (msg) => resolve(msg.text));
         });
@@ -275,42 +301,72 @@ const askForEditInformation = async (chatId) => {
     };
 };
 
-const edit_movie = async (chatId, id, editInformation) => {
+const edit_movie = async (chatId, id) => {
     if (process.env.ADMINCHATID == chatId) {
-        if (editInformation === undefined) {
-            editInformations = await askForEditInformation(chatId);
-            edit_movie(chatId, id, editInformations)
+        const questions = [
+            'Ism:',
+            'Tavsif:',
+            'Narxi:',
+            'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTRY</code> <code>UPPER_INTERMEDIATE</code>',
+            'Yosh chegarasi:',
+            'Serial Tanlang',
+            'Rasm URL manzili:'
+        ];
+
+        let answers = [];
+        let lastMessageId = null;
+
+        for (let i = 0; i < questions.length; i++) {
+            if (lastMessageId) {
+                await bot.deleteMessage(chatId, lastMessageId).catch(e => console.log('Error deleting message:', e));
+            }
+
+            const question = questions[i];
+            const response = await bot.sendMessage(chatId, question, { parse_mode: 'HTML' });
+            lastMessageId = response.message_id;
+
+            if (i === questions.length - 2) {
+                const selectedSerialId = await get_all_serials(chatId);
+                answers.push(selectedSerialId);
+            } else {
+                const answer = await new Promise((resolve) => {
+                    bot.once('text', (msg) => resolve(msg.text));
+                });
+                answers.push(answer);
+            }
         }
+
         try {
-            const requestBody = {
-                name: editInformation.name,
-                description: editInformation.description,
-                price: editInformation.price,
-                level: editInformation.level,
-                belongAge: editInformation.belongAge,
-                serialId: null,
-                updateImageUrl: editInformation.updateImageUrl,
-                updateImageGenre: editInformation.updateImageGenre
+            const editInfo = {
+                name: answers[0],
+                description: answers[1],
+                price: parseFloat(answers[2]),
+                level: answers[3],
+                belongAge: parseInt(answers[4]),
+                serialId: answers[5],
+                imageUrl: answers[6]
             };
 
-            const response = await axios.put(`${process.env.MAINAPI}/api/v1/movie/updateMovie/${id}`, requestBody, {
-                headers: {
-                    'Authorization': `Bearer ${process.env.BEKENDTOKEN}`
-                }
+            const response = await axios.put(`${process.env.MAINAPI}/api/v1/movie/updateMovie/${id}`, editInfo, {
+                headers: {'Authorization': `Bearer ${process.env.BEKENDTOKEN}`}
             });
 
             if (response.status === 200) {
-                show_movie(chatId, id);
+                await bot.sendMessage(chatId, 'Kino muvaffaqiyatli tahrirlandi.');
             } else {
-                console.error('Failed to update movie');
+                await bot.sendMessage(chatId, 'Kino tahrirlashda xatolik yuz berdi.');
             }
         } catch (error) {
             console.error('Error updating movie:', error.message);
+            await bot.sendMessage(chatId, 'Tahrirlash jarayonida xatolik yuz berdi.');
         }
     } else {
-        bot.sendMessage(chatId, 'Damingni ol');
+        await bot.sendMessage(chatId, 'Sizda bu amalni bajarish huquqi yo\'q.');
     }
 };
+
+
+
 
 module.exports = {
     get_all_movies, pagination_movie, show_movie, delete_movie, edit_movie, add_movie, pageableforSerials

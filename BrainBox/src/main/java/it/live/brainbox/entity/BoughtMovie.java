@@ -1,7 +1,9 @@
 package it.live.brainbox.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.live.brainbox.entity.temp.AbsUUIDEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
@@ -14,6 +16,6 @@ import lombok.*;
 public class BoughtMovie extends AbsUUIDEntity {
     @ManyToOne
     private User user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
 }
