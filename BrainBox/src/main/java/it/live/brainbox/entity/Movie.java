@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.live.brainbox.entity.enums.Level;
 import it.live.brainbox.entity.temp.AbsLongEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -21,6 +22,7 @@ public class Movie extends AbsLongEntity {
     @Column(nullable = false)
     private String name;
     @Column(columnDefinition = "text")
+    @Size(max = 10000)
     private String description;
     private Integer price;
     private String avatarUrl;

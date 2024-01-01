@@ -2,6 +2,7 @@ package it.live.brainbox.payload;
 
 import it.live.brainbox.entity.enums.Level;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class MovieDTO {
     @NotNull(message = "Kino nomini kiriting")
     private String name;
+    @Size(max = 10000)
     private String description;
     @NotNull(message = "Kino narxini kiriting")
     private Integer price;
