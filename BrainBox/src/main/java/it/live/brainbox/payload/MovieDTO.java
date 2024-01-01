@@ -16,8 +16,6 @@ import org.hibernate.validator.constraints.Length;
 public class MovieDTO {
     @NotNull(message = "Kino nomini kiriting")
     private String name;
-    @Size(max = 10000000)
-    @Length(max = 10000000)
     private String description;
     @NotNull(message = "Kino narxini kiriting")
     private Integer price;

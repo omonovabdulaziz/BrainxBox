@@ -23,8 +23,6 @@ public class Movie extends AbsLongEntity {
     @Column(nullable = false)
     private String name;
     @Column(columnDefinition = "text")
-    @Size(max = 100000000)
-    @Length(max = 10000000)
     private String description;
     private Integer price;
     private String avatarUrl;
