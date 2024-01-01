@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +16,8 @@ import lombok.NoArgsConstructor;
 public class MovieDTO {
     @NotNull(message = "Kino nomini kiriting")
     private String name;
-    @Size(max = 10000)
+    @Size(max = 100000)
+    @Length(max = 100000)
     private String description;
     @NotNull(message = "Kino narxini kiriting")
     private Integer price;
