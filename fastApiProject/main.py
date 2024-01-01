@@ -11,7 +11,9 @@ import concurrent.futures
 
 app = FastAPI()
 
-EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's"}
+EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's", "THE", "TO", "OF", "YOU", "AND", "THIS",
+                  "THAT'S", "IT'S", "THAT", "that", "You", "The", "To", "Of", "And", "This", "That", "That's", "It's",
+                  "It"}
 
 
 def is_english_word(word):
@@ -101,7 +103,6 @@ async def upload_subtitle(
 
     except Exception as e:
         return JSONResponse(content={"message": f"Error processing file: {str(e)}"}, status_code=500)
-
 
 
 if __name__ == "__main__":
