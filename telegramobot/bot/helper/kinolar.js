@@ -14,6 +14,7 @@ const askForAddingMovie = async (chatId) => {
         'Serial Tanlang',
     ];
 
+
     let answers = [];
     let lastMessageId = null;
 
@@ -115,6 +116,7 @@ const add_movie = async (chatId) => {
     if (process.env.ADMINCHATID == chatId) {
         try {
             const movieInfo = await askForAddingMovie(chatId);
+            console.log(movieInfo.description)
             const apiUrl = process.env.MAINAPI + '/api/v1/movie/addMovie';
             const headers = {
                 Authorization: `Bearer ${process.env.BEKENDTOKEN}`, 'Content-Type': 'application/json',
