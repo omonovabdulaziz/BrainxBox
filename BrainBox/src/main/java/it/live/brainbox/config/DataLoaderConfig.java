@@ -17,7 +17,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class DataLoaderConfig implements CommandLineRunner {
     private final UserRepository userRepository;
-    private final JwtProvider jetProvider;
     private final LanguageRepository languageRepository;
 
 
@@ -30,7 +29,7 @@ public class DataLoaderConfig implements CommandLineRunner {
             userRepository.save(User.builder().isPremium(true).name("Abdulaziz").email("omonov2006omonov@gmail.com").surname("Omonov").systemRoleName(SystemRoleName.ROLE_ADMIN).enabled(true).isAccountNonExpired(true).isAccountNonLocked(true).isCredentialsNonExpired(true).uniqueId("omonov2006").coins(0).build());
             languageRepository.save(Language.builder().name("ENGLISH").build());
             languageRepository.save(Language.builder().name("RUSSIAN").build());
-            jetProvider.generateToken("omonov2006omonov@gmail.com");
+            userRepository.save(User.builder().isPremium(true).name("Developer").email("dev@gmail.com").surname("Developer").systemRoleName(SystemRoleName.ROLE_USER).enabled(true).isAccountNonExpired(true).isAccountNonLocked(true).isCredentialsNonExpired(true).uniqueId("dev").coins(0).build());
             System.out.println("MALUMOTLAR SAQLANDI");
         }
     }

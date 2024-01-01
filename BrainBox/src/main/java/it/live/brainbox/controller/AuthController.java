@@ -19,8 +19,8 @@ public class AuthController {
         return authService.regLog(registerDTO);
     }
 
-    @PostMapping("/telegramAdminAuth")
-    public ResponseEntity<ApiResponse> telegramAdminAuth(@RequestParam String login , @RequestParam String password){
-        return authService.telegramAdminAuth(login , password);
+    @PostMapping("/isDebug")
+    public ResponseEntity<ApiResponse> isDebug(){
+        return authService.isDebug();
     }
 }

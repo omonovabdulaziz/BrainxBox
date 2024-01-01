@@ -8,5 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface AuthService {
     ResponseEntity<ApiResponse> regLog(UserDTO registerDTO);
 
-    ResponseEntity<ApiResponse> telegramAdminAuth(String login, String password);
+    ResponseEntity<ApiResponse> isDebug();
+
 }

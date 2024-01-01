@@ -9,6 +9,7 @@ import it.live.brainbox.payload.UserDTO;
 import it.live.brainbox.repository.UserRepository;
 import it.live.brainbox.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
     private final UserMapper userMapper;
 
+    @Value(value = "${is.debug}")
+    private Boolean isDebug;
+
     @Override
     public ResponseEntity<ApiResponse> regLog(UserDTO userDTO) {
         if (userRepository.findByEmailAndUniqueId(userDTO.getEmail(), userDTO.getUniqueId()).isPresent())
@@ -28,11 +32,10 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> telegramAdminAuth(String login, String password) {
-        if (!userRepository.existsByEmailAndUniqueIdAndSystemRoleName(login, password , SystemRoleName.ROLE_ADMIN))
-            throw new MainException("Login yoki parolingiz xato");
-
-        return ResponseEntity.ok(ApiResponse.builder().message("Xush kelibsiz").status(200).object(jwtProvider.generateToken(login)).build());
+    public ResponseEntity<ApiResponse> isDebug() {
+        if (isDebug)
+            return ResponseEntity.ok(ApiResponse.builder().message("Xush kelibsiz").status(200).object(jwtProvider.generateToken("dev@gmail.com")).build());
+        return null;
     }
 
 
