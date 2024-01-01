@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class Movie extends AbsLongEntity {
     @Column(nullable = false)
     private String name;
     @Column(columnDefinition = "text")
-    @Size(max = 100000)
+    @Size(max = 100000000)
+    @Length(max = 10000000)
     private String description;
     private Integer price;
     private String avatarUrl;
