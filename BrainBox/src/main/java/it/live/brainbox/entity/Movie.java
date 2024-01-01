@@ -20,6 +20,7 @@ import java.util.List;
 public class Movie extends AbsLongEntity {
     @Column(nullable = false)
     private String name;
+    @Column(columnDefinition = "text")
     private String description;
     private Integer price;
     private String avatarUrl;
