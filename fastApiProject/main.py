@@ -84,7 +84,9 @@ def try_different_encodings(file_content):
     encodings = ['utf-8', 'windows-1252', 'ISO-8859-1']
     for encoding in encodings:
         try:
-            return file_content.decode(encoding)
+            decoded_content = file_content.decode(encoding)
+            cleaned_content = re.sub(r'<i>', '', decoded_content)  # Remove <i> tags
+            return cleaned_content
         except UnicodeDecodeError:
             continue
     raise UnicodeDecodeError("Could not decode with any of the provided encodings.")
