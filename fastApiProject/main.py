@@ -22,6 +22,11 @@ CONFIDENCE_THRESHOLD = 0.9
 def is_english_word(word):
     if word in EXCLUDED_WORDS:
         return False
+
+    # Check if the word starts or ends with an extra 'I' character and exclude it
+    if word.startswith('I') or word.endswith('I'):
+        return False
+
     detected_languages = detect_langs(word)
 
     for lang_info in detected_languages:
@@ -29,7 +34,6 @@ def is_english_word(word):
             return True
 
     return False
-
 def count_word_occurrences(text):
     # Remove all characters except the single quote ('), letters, and spaces
     text_cleaned = re.sub(r"[^A-Za-z\s']", '', text)
