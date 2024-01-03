@@ -35,6 +35,7 @@ def is_english_word(word):
 
 
 def count_word_occurrences(text):
+    # Remove all characters except the single quote ('), letters, and spaces
     text_cleaned = re.sub(r"[^A-Za-z\s']", '', text)
     words = text_cleaned.split()
     word_count = Counter(words)
@@ -109,9 +110,9 @@ async def upload_subtitle(
 ):
     try:
         content = await subtitle_file.read()
-        cleaned_text = try_different_encodings(content)
+        text_cleaned = try_different_encodings(content)
 
-        word_count_data = count_word_occurrences(cleaned_text)
+        word_count_data = count_word_occurrences(text_cleaned)
         english_word_count_data = remove_non_english_words(word_count_data)
         translated_data = translate(english_word_count_data)
 
