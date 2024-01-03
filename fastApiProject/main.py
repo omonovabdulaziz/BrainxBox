@@ -111,6 +111,10 @@ async def upload_subtitle(
 
         translated_data_dict = [entry.__dict__ for entry in translated_data]
 
+        if not translated_data_dict:
+            # Handle the case when no English words are found
+            return JSONResponse(content={"message": "No English words found in the text."})
+
         return JSONResponse(content={"result": translated_data_dict})
 
     except Exception as e:
