@@ -59,10 +59,9 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public ResponseEntity<ApiResponse> updateMovie(MovieDTO movieDTO, Long movieId) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new NotFoundException("No such movie exists"));
-        if (movieDTO.getUpdateImageGenre() != null && movieDTO.getUpdateImageUrl() != null) {
+        if (movieDTO.getUpdateImageUrl() != null) {
             movie.setName(movieDTO.getName());
             movie.setAvatarUrl(movieDTO.getUpdateImageUrl());
-            movie.setGenre(movieDTO.getUpdateImageGenre());
         } else {
             if (!Objects.equals(movie.getName(), movieDTO.getName())) {
                 movie.setName(movieDTO.getName());
