@@ -1,6 +1,5 @@
 import re
 from collections import Counter
-
 import uvicorn
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
@@ -69,6 +68,11 @@ def translate(data):
                 if entry.word not in translated_words:
                     # Check if the word is English (you can adjust the condition as needed)
                     if is_english_word(entry.word):
+                        # Handle 'I' or 'i' at the beginning or end of the word
+                        if entry.word.startswith('I'):
+                            entry.word = entry.word[1:]
+                        if entry.word.endswith('I'):
+                            entry.word = entry.word[:-1]
                         # Convert the word to uppercase
                         entry.word = entry.word.upper()
                     # Convert the first letter of the translated word to lowercase
