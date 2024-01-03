@@ -16,7 +16,7 @@ EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's", "TH
                   "It"}
 
 # Set a confidence threshold for language detection
-CONFIDENCE_THRESHOLD = 1
+CONFIDENCE_THRESHOLD = 0.9
 
 
 def is_english_word(word):
