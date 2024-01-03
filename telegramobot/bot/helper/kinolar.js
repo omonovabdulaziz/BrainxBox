@@ -262,46 +262,6 @@ const delete_movie = async (chatId, id) => {
 }
 
 
-const askForEditInformation = async (chatId) => {
-    const questions = [
-        'Ism:',
-        'Tavsif:',
-        'Narxi:',
-        'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTRY</code> <code>UPPER_INTERMEDIATE</code>',
-        'Yosh chegarasi:',
-        'Serial ID:',
-        'Rasm URL manzili:',
-        'Kino janri:',
-    ];
-
-    let answers = [];
-    let lastMessageId = null;
-
-    for (const question of questions) {
-        if (lastMessageId) {
-            await bot.deleteMessage(chatId, lastMessageId).catch(e => console.log('Error deleting message:', e));
-        }
-
-        const response = await bot.sendMessage(chatId, question);
-        lastMessageId = response.message_id;
-
-        const answer = await new Promise(resolve => {
-            bot.once('text', (msg) => resolve(msg.text));
-        });
-        answers.push(answer);
-    }
-
-    return {
-        name: answers[0],
-        description: answers[1],
-        price: parseFloat(answers[2]),
-        level: answers[3],
-        belongAge: parseInt(answers[4]),
-        serialId: parseInt(answers[5]) || null,
-        updateImageUrl: answers[6],
-        updateImageGenre: answers[7]
-    };
-};
 
 const edit_movie = async (chatId, id) => {
     if (process.env.ADMINCHATID == chatId) {
@@ -328,7 +288,7 @@ const edit_movie = async (chatId, id) => {
             const response = await bot.sendMessage(chatId, question, { parse_mode: 'HTML' });
             lastMessageId = response.message_id;
 
-            if (i === questions.length - 2) {
+            if (i === questions.length - 3) {
                 const selectedSerialId = await get_all_serials(chatId);
                 answers.push(selectedSerialId);
             } else {
