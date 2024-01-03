@@ -9,7 +9,7 @@ const askForAddingMovie = async (chatId) => {
         'Ism:',
         'Description:',
         'Narxi:',
-        'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTRY</code> <code>UPPER_INTERMEDIATE</code>',
+        'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>',
         'Yosh chegarasi:',
         'Serial Tanlang',
     ];
@@ -309,7 +309,7 @@ const edit_movie = async (chatId, id) => {
             'Ism:',
             'Tavsif:',
             'Narxi:',
-            'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTRY</code> <code>UPPER_INTERMEDIATE</code>',
+            'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>',
             'Yosh chegarasi:',
             'Serial Tanlang',
             'Rasm URL manzili:'
