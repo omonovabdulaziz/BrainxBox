@@ -85,11 +85,24 @@ def try_different_encodings(file_content):
     for encoding in encodings:
         try:
             decoded_content = file_content.decode(encoding)
-            cleaned_content = re.sub(r'<i>', '', decoded_content)  # Remove <i> tags
+            cleaned_content = eliminate_patterns(decoded_content)  # Remove <i> tags
             return cleaned_content
         except UnicodeDecodeError:
             continue
     raise UnicodeDecodeError("Could not decode with any of the provided encodings.")
+
+
+def eliminate_patterns(text):
+    # Define a list of patterns to eliminate
+    patterns_to_eliminate = [r'<i>', r'\.<i>', r'\[', r'\]']
+
+    # Create a regular expression pattern that matches any of the defined patterns
+    pattern = '|'.join(re.escape(p) for p in patterns_to_eliminate)
+
+    # Use re.sub to replace the matched patterns with an empty string
+    cleaned_text = re.sub(pattern, '', text)
+
+    return cleaned_text
 
 
 @app.post("/uploadSubtitle")
