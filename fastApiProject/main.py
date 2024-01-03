@@ -94,7 +94,7 @@ def try_different_encodings(file_content):
 
 def eliminate_patterns(text):
     # Define a list of patterns to eliminate
-    patterns_to_eliminate = [r'<i>', r'\.<i>', r'\[', r'\]', r'\,<i>']
+    patterns_to_eliminate = [r'<i>', r'\.<\i>', r'\[', r'\]', r'\,<\i>']
 
     # Create a regular expression pattern that matches any of the defined patterns
     pattern = '|'.join(re.escape(p) for p in patterns_to_eliminate)
