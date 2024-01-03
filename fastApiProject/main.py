@@ -16,7 +16,7 @@ EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's", "TH
                   "It"}
 
 # Set a confidence threshold for language detection
-CONFIDENCE_THRESHOLD = 0.8
+CONFIDENCE_THRESHOLD = 1
 
 
 def is_english_word(word):
@@ -29,7 +29,6 @@ def is_english_word(word):
             return True
 
     return False
-
 
 def count_word_occurrences(text):
     # Remove all characters except the single quote ('), letters, and spaces
