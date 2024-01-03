@@ -10,13 +10,17 @@ import concurrent.futures
 
 app = FastAPI()
 
-EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's", "THE", "TO", "OF", "YOU", "AND", "THIS",
-                  "THAT'S", "IT'S", "THAT", "that", "You", "The", "To", "Of", "And", "This", "That", "That's", "It's",
-                  "It"}
+EXCLUDED_WORDS = {
+    "the", "to", "of", "and", "in", "it", "is", "for", "on", "with",
+    "that", "this", "at", "from", "by", "as", "an", "but", "or",
+    "he", "she", "i", "me", "my", "mine", "you",
+    "his", "her", "hers", "its", "we", "us", "our", "ours",
+    "your", "yours", "their", "theirs",
+}
 
 
 def is_english_word(word):
-    if word in EXCLUDED_WORDS:
+    if word.lower() in {excluded_word.lower() for excluded_word in EXCLUDED_WORDS}:
         return False
     try:
         language = detect(word)
@@ -54,7 +58,6 @@ def translate_word_threaded(word, count):
 
 
 def translate(data):
-    print('Translating...')
     translated_entries = {}
     translated_words = set()
 
@@ -66,19 +69,10 @@ def translate(data):
             for future in concurrent.futures.as_completed(futures):
                 entry = future.result()
                 if entry.word not in translated_words:
-                    # Check if the word is English (you can adjust the condition as needed)
                     if is_english_word(entry.word):
-                        # Handle 'I' or 'i' at the beginning or end of the word
-                        if entry.word.startswith('I'):
-                            entry.word = entry.word[1:]
-                        if entry.word.endswith('I'):
-                            entry.word = entry.word[:-1]
-                        # Convert the word to uppercase
                         entry.word = entry.word.upper()
-                    # Convert the first letter of the translated word to lowercase
                     entry.translation_en = entry.translation_en[0].lower() + entry.translation_en[1:]
                     entry.translation_ru = entry.translation_ru[0].lower() + entry.translation_ru[1:]
-
                     translated_entries[entry.word] = entry
                     translated_words.add(entry.word)
                 pbar.update(1)
@@ -97,9 +91,7 @@ def try_different_encodings(file_content):
 
 
 @app.post("/uploadSubtitle")
-async def upload_subtitle(
-        subtitle_file: UploadFile = File(...),
-):
+async def upload_subtitle(subtitle_file: UploadFile = File(...)):
     try:
         content = await subtitle_file.read()
         cleaned_text = try_different_encodings(content)
