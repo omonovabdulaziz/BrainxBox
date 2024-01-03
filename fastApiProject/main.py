@@ -1,11 +1,12 @@
 import re
 from collections import Counter
+
 import uvicorn
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 from deep_translator import GoogleTranslator
 from tqdm import tqdm
-from langdetect import detect_langs
+from langdetect import detect
 import concurrent.futures
 
 app = FastAPI()
@@ -14,28 +15,18 @@ EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's", "TH
                   "THAT'S", "IT'S", "THAT", "that", "You", "The", "To", "Of", "And", "This", "That", "That's", "It's",
                   "It"}
 
-# Set a confidence threshold for language detection
-CONFIDENCE_THRESHOLD = 0.9
-
 
 def is_english_word(word):
     if word in EXCLUDED_WORDS:
         return False
-
-    # Check if the word is exactly 3 letters long or occurs as an individual word
-    if len(word) == 3 or word in text_cleaned.split():
+    try:
+        language = detect(word)
+        return language in ['en', 'eng']
+    except:
         return False
-
-    detected_languages = detect_langs(word)
-
-    for lang_info in detected_languages:
-        if lang_info.lang in ['en', 'eng'] and lang_info.prob >= CONFIDENCE_THRESHOLD:
-            return True
-    return False
 
 
 def count_word_occurrences(text):
-    # Remove all characters except the single quote ('), letters, and spaces
     text_cleaned = re.sub(r"[^A-Za-z\s']", '', text)
     words = text_cleaned.split()
     word_count = Counter(words)
@@ -78,9 +69,6 @@ def translate(data):
                 if entry.word not in translated_words:
                     # Check if the word is English (you can adjust the condition as needed)
                     if is_english_word(entry.word):
-                        # Remove 'i' at the beginning and end if it's followed by uppercase letters
-                        if re.match(r'^i[A-Z]+i$', entry.word):
-                            entry.word = entry.word[1:-1]
                         # Convert the word to uppercase
                         entry.word = entry.word.upper()
                     # Convert the first letter of the translated word to lowercase
@@ -110,17 +98,13 @@ async def upload_subtitle(
 ):
     try:
         content = await subtitle_file.read()
-        text_cleaned = try_different_encodings(content)
+        cleaned_text = try_different_encodings(content)
 
-        word_count_data = count_word_occurrences(text_cleaned)
+        word_count_data = count_word_occurrences(cleaned_text)
         english_word_count_data = remove_non_english_words(word_count_data)
         translated_data = translate(english_word_count_data)
 
         translated_data_dict = [entry.__dict__ for entry in translated_data]
-
-        if not translated_data_dict:
-            # Handle the case when no English words are found
-            return JSONResponse(content={"message": "No English words found in the text."})
 
         return JSONResponse(content={"result": translated_data_dict})
 
