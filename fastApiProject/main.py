@@ -2,17 +2,18 @@ import re
 from collections import Counter
 
 import uvicorn
-from deep_translator import GoogleTranslator
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
-from langdetect import detect
+from deep_translator import GoogleTranslator
 from tqdm import tqdm
+from langdetect import detect
+import concurrent.futures
 
 app = FastAPI()
 
 EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's", "THE", "TO", "OF", "YOU", "AND", "THIS",
                   "THAT'S", "IT'S", "THAT", "that", "You", "The", "To", "Of", "And", "This", "That", "That's", "It's",
-                  "It", "WHAT", "What", "what"}
+                  "It"}
 
 
 def is_english_word(word):
@@ -20,13 +21,7 @@ def is_english_word(word):
         return False
     try:
         language = detect(word)
-        if language in ['en', 'eng']:
-            return True
-        # 1% e'timol tekshirish qo'shilgan qismi
-        total_chars = len(word)
-        english_chars = sum(1 for char in word if char.isalpha() and char.isascii())
-        english_ratio = english_chars / total_chars
-        return english_ratio >= 0.01
+        return language in ['en', 'eng']
     except:
         return False
 
@@ -35,7 +30,6 @@ def count_word_occurrences(text):
     characters_to_remove = r'[!?<>,-:->\d]'
     text_cleaned = re.sub(characters_to_remove, '', text)
     words = text_cleaned.split()
-    words = [word for word in words if is_english_word(word)]  # Qo'shilgan qismi
     word_count = Counter(words)
     return {"word_count": word_count}
 
@@ -67,11 +61,15 @@ def translate(data):
     translated_words = set()
 
     with tqdm(total=len(data['word_count'])) as pbar:
-        for word, count in data['word_count'].items():
-            if word not in translated_words and is_english_word(word):
-                entry = translate_word_threaded(word, count)
-                translated_entries[entry.word] = entry
-                translated_words.add(entry.word)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = [executor.submit(translate_word_threaded, word, count) for word, count in
+                       data['word_count'].items() if word not in translated_words]
+
+            for future in concurrent.futures.as_completed(futures):
+                entry = future.result()
+                if entry.word not in translated_words:
+                    translated_entries[entry.word] = entry
+                    translated_words.add(entry.word)
                 pbar.update(1)
 
     return list(translated_entries.values())
