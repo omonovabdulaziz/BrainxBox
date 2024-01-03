@@ -27,8 +27,7 @@ def is_english_word(word):
 
 
 def count_word_occurrences(text):
-    characters_to_remove = r'[!?<>,-:->\d]'
-    text_cleaned = re.sub(characters_to_remove, '', text)
+    text_cleaned = re.sub(r"[^A-Za-z\s']", '', text)
     words = text_cleaned.split()
     word_count = Counter(words)
     return {"word_count": word_count}
@@ -68,6 +67,14 @@ def translate(data):
             for future in concurrent.futures.as_completed(futures):
                 entry = future.result()
                 if entry.word not in translated_words:
+                    # Check if the word is English (you can adjust the condition as needed)
+                    if is_english_word(entry.word):
+                        # Convert the word to uppercase
+                        entry.word = entry.word.upper()
+                    # Convert the first letter of the translated word to lowercase
+                    entry.translation_en = entry.translation_en[0].lower() + entry.translation_en[1:]
+                    entry.translation_ru = entry.translation_ru[0].lower() + entry.translation_ru[1:]
+
                     translated_entries[entry.word] = entry
                     translated_words.add(entry.word)
                 pbar.update(1)
