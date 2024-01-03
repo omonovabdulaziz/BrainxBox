@@ -95,7 +95,7 @@ public class MovieServiceImpl implements MovieService {
         } else if (noSubtitle) {
             movies = movieRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
         } else {
-            movies = movieRepository.findAll(of(page, size));
+            movies = movieRepository.findAll(of(page, size, Sort.by("createdAt").descending()));
         }
         for (Movie movie : movies) {
             if (boughtMovieRepository.existsByUserIdAndMovieId(user.getId(), movie.getId())) {
