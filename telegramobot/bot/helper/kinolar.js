@@ -312,7 +312,8 @@ const edit_movie = async (chatId, id) => {
             'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>',
             'Yosh chegarasi:',
             'Serial Tanlang',
-            'Rasm URL manzili:'
+            'Rasm URL manzili:',
+            'Rasm Janri : <code>ACTION</code> <code>ADVENTURE</code>  <code>ANIMATION</code> <code>COMEDY</code>   <code>CRIME</code> <code>DRAMA</code>  <code>FANTASY</code> <code>HISTORICAL</code>'
         ];
 
         let answers = [];
@@ -346,7 +347,8 @@ const edit_movie = async (chatId, id) => {
                 level: answers[3],
                 belongAge: parseInt(answers[4]),
                 serialId: answers[5],
-                updateImageUrl: answers[6]
+                updateImageUrl: answers[6],
+                updateImageGenre: answers[7]
             };
 
             const response = await axios.put(`${process.env.MAINAPI}/api/v1/movie/updateMovie/${id}`, editInfo, {
