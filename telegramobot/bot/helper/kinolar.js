@@ -346,7 +346,7 @@ const edit_movie = async (chatId, id) => {
                 level: answers[3],
                 belongAge: parseInt(answers[4]),
                 serialId: answers[5],
-                imageUrl: answers[6]
+                updateImageUrl: answers[6]
             };
 
             const response = await axios.put(`${process.env.MAINAPI}/api/v1/movie/updateMovie/${id}`, editInfo, {
