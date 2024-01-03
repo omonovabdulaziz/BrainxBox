@@ -34,7 +34,7 @@ public class SubtitleServiceImpl implements SubtitleService {
 
     @Override
     public Page<?> getWordsByCount(long movieId, int page, int size) {
-        return subtitleRepository.findAllByMovieId(movieId, PageRequest.of(page, size, Sort.by("count").descending()));
+        return subtitleRepository.findAllByMovieId(movieId, PageRequest.of(page, size, Sort.by("count").ascending()));
     }
 
     @Override
