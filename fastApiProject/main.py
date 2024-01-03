@@ -6,7 +6,7 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 from deep_translator import GoogleTranslator
 from tqdm import tqdm
-from langdetect import detect
+from langdetect import detect_langs
 import concurrent.futures
 
 app = FastAPI()
@@ -15,18 +15,24 @@ EXCLUDED_WORDS = {"the", "to", "of", "you", "and", "this", "that's", "it's", "TH
                   "THAT'S", "IT'S", "THAT", "that", "You", "The", "To", "Of", "And", "This", "That", "That's", "It's",
                   "It"}
 
+# Set a confidence threshold for language detection
+CONFIDENCE_THRESHOLD = 0.8
+
 
 def is_english_word(word):
     if word in EXCLUDED_WORDS:
         return False
-    try:
-        language = detect(word)
-        return language in ['en', 'eng']
-    except:
-        return False
+    detected_languages = detect_langs(word)
+
+    for lang_info in detected_languages:
+        if lang_info.lang in ['en', 'eng'] and lang_info.prob >= CONFIDENCE_THRESHOLD:
+            return True
+
+    return False
 
 
 def count_word_occurrences(text):
+    # Remove all characters except the single quote ('), letters, and spaces
     text_cleaned = re.sub(r"[^A-Za-z\s']", '', text)
     words = text_cleaned.split()
     word_count = Counter(words)
