@@ -18,6 +18,16 @@ EXCLUDED_WORDS = {
     "your", "yours", "their", "theirs",
 }
 
+translated_words = set()  # Qo'shilgan so'zlarni saqlash uchun to'plam
+
+
+class TranslationEntry:
+    def __init__(self, word, count, translation_en, translation_ru):
+        self.word = word
+        self.count = count
+        self.translation_en = translation_en
+        self.translation_ru = translation_ru
+
 
 def is_english_word(word):
     if word.lower() in {excluded_word.lower() for excluded_word in EXCLUDED_WORDS}:
@@ -43,38 +53,27 @@ def remove_non_english_words(data):
     return data
 
 
-class TranslationEntry:
-    def __init__(self, word, count, translation_en, translation_ru):
-        self.word = word
-        self.count = count
-        self.translation_en = translation_en
-        self.translation_ru = translation_ru
-
-
 def translate_word_threaded(word, count):
+    if word.lower() in translated_words:  # Qo'shilgan so'zlarni tekshirish
+        return None
     translation_en = GoogleTranslator(source='en', target='uz').translate(word)
     translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
-    return TranslationEntry(word, count, translation_en, translation_ru)
+    translated_words.add(word.lower())  # So'zni qo'shgan ekanini saqlash
+    return TranslationEntry(word.upper(), count, translation_en.capitalize(), translation_ru.capitalize())
 
 
 def translate(data):
     translated_entries = {}
-    translated_words = set()
 
     with tqdm(total=len(data['word_count'])) as pbar:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = [executor.submit(translate_word_threaded, word, count) for word, count in
-                       data['word_count'].items() if word not in translated_words]
+                       data['word_count'].items()]
 
             for future in concurrent.futures.as_completed(futures):
                 entry = future.result()
-                if entry.word not in translated_words:
-                    if is_english_word(entry.word):
-                        entry.word = entry.word.upper()
-                    entry.translation_en = entry.translation_en[0].lower() + entry.translation_en[1:]
-                    entry.translation_ru = entry.translation_ru[0].lower() + entry.translation_ru[1:]
+                if entry:
                     translated_entries[entry.word] = entry
-                    translated_words.add(entry.word)
                 pbar.update(1)
 
     return list(translated_entries.values())
@@ -85,7 +84,7 @@ def try_different_encodings(file_content):
     for encoding in encodings:
         try:
             decoded_content = file_content.decode(encoding)
-            cleaned_content = eliminate_patterns(decoded_content)  # Remove <i> tags
+            cleaned_content = eliminate_patterns(decoded_content)
             return cleaned_content
         except UnicodeDecodeError:
             continue
@@ -97,7 +96,8 @@ def eliminate_patterns(text):
 
     cleaned_text = re.sub(html_pattern, '', text)
 
-    additional_patterns_to_eliminate = [r'<i>', r'\.<i>', r'\[', r'\]', r'\,<i>', r'\.</i>', r'\,</i>', r'</i>', r'.</i>', r',</i>']
+    additional_patterns_to_eliminate = [r'<i>', r'\.<i>', r'\[', r'\]', r'\,<i>', r'\.</i>', r'\,</i>', r'</i>',
+                                        r'.</i>', r',</i>']
 
     additional_pattern = '|'.join(re.escape(p) for p in additional_patterns_to_eliminate)
 
