@@ -2,7 +2,7 @@ const axios = require('axios');
 const {bot} = require('../bot');
 
 
-const API_URL = process.env.MAINAPI + '/api/v1/auth/onOrOfDebug';
+const API_URL = 'http://137.184.14.168:8080/api/v1/auth/onOrOfDebug';
 
 const editOnOf = async () => {
     try {
