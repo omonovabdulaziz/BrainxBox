@@ -22,6 +22,6 @@ bot.on('message', async msg => {
         await get_all_serials(chatId)
     }
     if (text === 'DeveloperModeEditor') {
-        await editOnOf()
+        await editOnOf(chatId)
     }
 })
