@@ -77,5 +77,4 @@ public class MovieController {
     public Page<RequestMovie> getAllRequestsByPage(@RequestParam int page, @RequestParam int size) {
         return movieService.getAllRequestPage(page, size);
     }
-
 }

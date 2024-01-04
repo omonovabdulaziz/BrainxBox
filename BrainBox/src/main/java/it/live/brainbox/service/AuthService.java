@@ -10,4 +10,5 @@ public interface AuthService {
 
     ResponseEntity<ApiResponse> isDebug();
 
+    Boolean onOrOf();
 }

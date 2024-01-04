@@ -11,6 +11,11 @@ const adminKeyboard = [
         {
             text: 'Seriallar'
         }
+    ],
+    [
+        {
+            text: 'DeveloperModeEditor'
+        }
     ]
 ]
 

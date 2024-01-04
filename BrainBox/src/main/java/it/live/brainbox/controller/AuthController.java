@@ -20,7 +20,13 @@ public class AuthController {
     }
 
     @PostMapping("/isDebug")
-    public ResponseEntity<ApiResponse> isDebug(){
+    public ResponseEntity<ApiResponse> isDebug() {
         return authService.isDebug();
     }
+
+    @PostMapping("/onOrOfDebug")
+    public Boolean onOrOf() {
+        return authService.onOrOf();
+    }
+
 }

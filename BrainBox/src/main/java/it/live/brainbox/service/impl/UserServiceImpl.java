@@ -37,10 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setUniqueId(userDTO.getUniqueId());
             user.setImageUrl(userDTO.getImageUrl());
         }
-
-
         user.setCoins(user.getCoins() + addCoin);
-
         userRepository.save(user);
         return ResponseEntity.ok(ApiResponse.builder().message("success").status(200).build());
     }

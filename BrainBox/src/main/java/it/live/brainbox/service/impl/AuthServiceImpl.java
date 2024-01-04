@@ -19,9 +19,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
     private final UserMapper userMapper;
-
-    @Value(value = "${is.debug}")
-    private Boolean isDebug;
+    private Boolean isDebug = false;
 
     @Override
     public ResponseEntity<ApiResponse> regLog(UserDTO userDTO) {
@@ -36,6 +34,17 @@ public class AuthServiceImpl implements AuthService {
         if (isDebug)
             return ResponseEntity.ok(ApiResponse.builder().message("Xush kelibsiz").status(200).object(jwtProvider.generateToken("dev@gmail.com")).build());
         return null;
+    }
+
+    @Override
+    public Boolean onOrOf() {
+        if (isDebug) {
+            isDebug = false;
+            return false;
+        } else {
+            isDebug = true;
+            return true;
+        }
     }
 
 
