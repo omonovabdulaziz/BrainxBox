@@ -25,10 +25,4 @@ bot.on('message', async msg => {
     if (text === 'DeveloperModeEditor') {
         await editOnOf(chatId);
     }
-    const messages = await bot.getChatMessages(chatId);
-    if (messages.length > 2) {
-        for (let i = 0; i < messages.length - 2; i++) {
-            await bot.deleteMessage(chatId, messages[i].message_id);
-        }
-    }
 });

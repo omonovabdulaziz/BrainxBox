@@ -7,8 +7,6 @@ let pageAbleCalc = 0;
 const askForAddingMovie = async (chatId) => {
     const questions = [
         'Ism:',
-        'Description:',
-        'Narxi:',
         'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>',
         'Yosh chegarasi:',
         'Serial Tanlang',
@@ -40,11 +38,9 @@ const askForAddingMovie = async (chatId) => {
 
     return {
         name: answers[0],
-        description: answers[1],
-        price: parseFloat(answers[2]),
-        level: answers[3],
-        belongAge: parseInt(answers[4]),
-        serialId: answers[5],
+        level: answers[1],
+        belongAge: parseInt(answers[2]),
+        serialId: answers[3],
     };
 };
 
@@ -193,8 +189,7 @@ const show_movie = async (chatId, id) => {
                     Description: ${movieData.description}
                     Price: ${movieData.price}
                     Genre: ${movieData.genre}
-                    ImageUrl:${movieData.avatarUrl}
-                    Is Bought: ${movieData.isBought ? 'Yes' : 'No'}
+                    ImageUrl:${movieData.avatarUrl} 
                     Level: ${movieData.level}
                     Belong Age: ${movieData.belongAge} 
                     Is Serial: ${movieData.serial === null ? 'No' : 'Yes'}
@@ -268,12 +263,11 @@ const edit_movie = async (chatId, id) => {
         const questions = [
             'Ism:',
             'Tavsif:',
-            'Narxi:',
             'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>',
             'Yosh chegarasi:',
-            'Serial Tanlang',
             'Rasm URL manzili:',
-            'Rasm Janri : <code>ACTION</code> <code>ADVENTURE</code>  <code>ANIMATION</code> <code>COMEDY</code>   <code>CRIME</code> <code>DRAMA</code>  <code>FANTASY</code> <code>HISTORICAL</code>'
+            'Rasm Janri : <code>ACTION</code> <code>ADVENTURE</code>  <code>ANIMATION</code> <code>COMEDY</code>   <code>CRIME</code> <code>DRAMA</code>  <code>FANTASY</code> <code>HISTORICAL</code>',
+            'Serial Tanlang'
         ];
 
         let answers = [];
@@ -288,7 +282,7 @@ const edit_movie = async (chatId, id) => {
             const response = await bot.sendMessage(chatId, question, { parse_mode: 'HTML' });
             lastMessageId = response.message_id;
 
-            if (i === questions.length - 3) {
+            if (i === questions.length - 1) {
                 const selectedSerialId = await get_all_serials(chatId);
                 answers.push(selectedSerialId);
             } else {
@@ -303,12 +297,11 @@ const edit_movie = async (chatId, id) => {
             const editInfo = {
                 name: answers[0],
                 description: answers[1],
-                price: parseFloat(answers[2]),
-                level: answers[3],
-                belongAge: parseInt(answers[4]),
-                serialId: answers[5],
-                updateImageUrl: answers[6],
-                updateImageGenre: answers[7]
+                level: answers[2],
+                belongAge: parseInt(answers[3]),
+                serialId: answers[6],
+                updateImageUrl: answers[4],
+                updateImageGenre: answers[5]
             };
 
             const response = await axios.put(`${process.env.MAINAPI}/api/v1/movie/updateMovie/${id}`, editInfo, {
