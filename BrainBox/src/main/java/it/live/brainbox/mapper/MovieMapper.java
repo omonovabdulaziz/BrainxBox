@@ -16,10 +16,8 @@ public class MovieMapper {
     public Movie toEntity(MovieDTO movieDTO) {
         return Movie
                 .builder()
-                .belongAge(movieDTO.getBelongAge())
-                .price(movieDTO.getPrice())
+                .belongAge(18)
                 .name(movieDTO.getName())
-                .description(movieDTO.getDescription())
                 .level(movieDTO.getLevel())
                  .serial(movieDTO.getSerialId() == null ? null : serialRepository.findById(movieDTO.getSerialId()).get())
                 .build();

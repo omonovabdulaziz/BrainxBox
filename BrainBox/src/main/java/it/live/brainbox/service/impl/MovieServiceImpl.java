@@ -52,6 +52,8 @@ public class MovieServiceImpl implements MovieService {
         assert imageOfMovie != null;
         movie.setAvatarUrl(!Objects.equals(imageOfMovie.get(0), "null") ? imageOfMovie.get(0) : null);
         movie.setGenre(!Objects.equals(imageOfMovie.get(1), "null") ? imageOfMovie.get(1).split(", ")[0] : "ADVENTURE");
+        movie.setDescription(!Objects.equals(imageOfMovie.get(2), "null") ? imageOfMovie.get(2) : "Movie is Very Good. This Movie .....");
+        movie.setPrice(35);
         movieRepository.save(movie);
         return ResponseEntity.ok(ApiResponse.builder().status(200).message("Movie saved").build());
     }
@@ -63,6 +65,7 @@ public class MovieServiceImpl implements MovieService {
             movie.setName(movieDTO.getName());
             movie.setAvatarUrl(movieDTO.getUpdateImageUrl());
             movie.setGenre(movieDTO.getUpdateImageGenre());
+            movie.setDescription(movieDTO.getDescription());
         } else {
             if (!Objects.equals(movie.getName(), movieDTO.getName())) {
                 movie.setName(movieDTO.getName());
@@ -70,12 +73,12 @@ public class MovieServiceImpl implements MovieService {
                 assert imageOfMovie != null;
                 movie.setAvatarUrl(!Objects.equals(imageOfMovie.get(0), "null") ? imageOfMovie.get(0) : null);
                 movie.setGenre(!Objects.equals(imageOfMovie.get(1), "null") ? imageOfMovie.get(1).split(", ")[0] : null);
+                movie.setDescription(!Objects.equals(imageOfMovie.get(2), "null") ? imageOfMovie.get(2) : "Movie is Very Good. This Movie .....");
             }
         }
 
         movie.setLevel(movieDTO.getLevel());
-        movie.setDescription(movieDTO.getDescription());
-        movie.setPrice(movieDTO.getPrice());
+        movie.setPrice(35);
         if (movieDTO.getSerialId() != null)
             movie.setSerial(serialRepository.findById(movieDTO.getSerialId()).orElseThrow(() -> new NotFoundException("No such serial exists")));
         movie.setBelongAge(movieDTO.getBelongAge());
@@ -207,6 +210,7 @@ public class MovieServiceImpl implements MovieService {
             List<String> strings = new ArrayList<>();
             strings.add(jsonObject.optString("Poster", "null"));
             strings.add(jsonObject.optString("Genre", "null"));
+            strings.add(jsonObject.optString("Plot", "null"));
             return strings;
         } catch (Exception e) {
             e.printStackTrace();

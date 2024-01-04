@@ -14,12 +14,8 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @Builder
 public class MovieDTO {
-    @NotNull(message = "Kino nomini kiriting")
     private String name;
     private String description;
-    @NotNull(message = "Kino narxini kiriting")
-    private Integer price;
-    @NotNull(message = "Kino darajasini kiriting")
     private Level level;
     private Integer belongAge;
     private Long serialId;
