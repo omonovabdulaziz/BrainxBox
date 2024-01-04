@@ -1,12 +1,18 @@
 const {bot} = require('../bot')
-const {adminKeyboard} = require('../message')
 
 const start = async (chatId) => {
     if (chatId == process.env.ADMINCHATID) {
         bot.sendMessage(chatId, 'Choose from menu Admin', {
             reply_markup: {
-                keyboard: adminKeyboard,
-                resize_keyboard: true
+                keyboard: [[{
+                    text: 'Kinolar'
+                }, {
+                    text: 'Subtitlelar'
+                }], [{
+                    text: 'Seriallar'
+                }], [{
+                    text: 'DeveloperModeEditor'
+                }]], resize_keyboard: true
             }
         })
     } else {

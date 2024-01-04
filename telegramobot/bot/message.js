@@ -5,44 +5,16 @@ const { get_all_movie_for_subtitle } = require('./helper/subtitle');
 const { get_all_serials } = require("./helper/serial");
 const { editOnOf } = require("./helper/developer");
 
-// Admin keyboard buttons
-const adminKeyboard = [
-    [
-        {
-            text: 'Kinolar'
-        },
-        {
-            text: 'Subtitlelar'
-        }
-    ],
-    [
-        {
-            text: 'Seriallar'
-        }
-    ],
-    [
-        {
-            text: 'DeveloperModeEditor'
-        }
-    ]
-];
-
-async function clearChatBefore(chatId, messageId) {
-    try {
-        const messageIdsToDelete = [];
-        for (let i = 1; i < messageId; i++) {
-            messageIdsToDelete.push(i);
-        }
-        await Promise.all(messageIdsToDelete.map(id => bot.telegram.deleteMessage(chatId, id)));
-    } catch (error) {
-        console.error('Error deleting messages:', error);
-    }
-}
-
 bot.on('message', async msg => {
     const chatId = msg.chat.id;
     const text = msg.text;
-    const messageId = msg.message_id;
+
+    const messages = await bot.getChatMessages(chatId);
+    if (messages.length > 2) {
+        for (let i = 0; i < messages.length - 2; i++) {
+            await bot.deleteMessage(chatId, messages[i].message_id);
+        }
+    }
 
     if (text === '/start') {
         await start(chatId);
@@ -59,11 +31,4 @@ bot.on('message', async msg => {
     if (text === 'DeveloperModeEditor') {
         await editOnOf(chatId);
     }
-
-    // Admin buttons pressed, clear previous messages
-    if (adminKeyboard.some(row => row.some(btn => btn.text === text))) {
-        clearChatBefore(chatId, messageId);
-    }
 });
-
-module.exports = { adminKeyboard };
