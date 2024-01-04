@@ -93,14 +93,15 @@ def try_different_encodings(file_content):
 
 
 def eliminate_patterns(text):
-    # Define a list of patterns to eliminate
-    patterns_to_eliminate = [r'<i>', r'\.<i>', r'\[', r'\]', r'\,<i>', r'\.</i>', r'\,</i>', r'</i>', r'.</i>', r',</i>']
+    html_pattern = r'<[^>]+>'
 
-    # Create a regular expression pattern that matches any of the defined patterns
-    pattern = '|'.join(re.escape(p) for p in patterns_to_eliminate)
+    cleaned_text = re.sub(html_pattern, '', text)
 
-    # Use re.sub to replace the matched patterns with an empty string
-    cleaned_text = re.sub(pattern, '', text)
+    additional_patterns_to_eliminate = [r'<i>', r'\.<i>', r'\[', r'\]', r'\,<i>', r'\.</i>', r'\,</i>', r'</i>', r'.</i>', r',</i>']
+
+    additional_pattern = '|'.join(re.escape(p) for p in additional_patterns_to_eliminate)
+
+    cleaned_text = re.sub(additional_pattern, '', cleaned_text)
 
     return cleaned_text
 
