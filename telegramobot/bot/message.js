@@ -28,20 +28,19 @@ const adminKeyboard = [
 ];
 
 async function clearChatBefore(chatId, messageId) {
-    const options = {
-        chat_id: chatId,
-        message_id: messageId - 1, // Birortaga oldingi xabarlar
-    };
     try {
-        await bot.telegram.deleteMessage(chatId, messageId);
-        await bot.telegram.deleteMessage(chatId, options.message_id);
+        const messageIdsToDelete = [];
+        for (let i = 1; i < messageId; i++) {
+            messageIdsToDelete.push(i);
+        }
+        await Promise.all(messageIdsToDelete.map(id => bot.telegram.deleteMessage(chatId, id)));
     } catch (error) {
-        console.error('Xabar o\'chirishda xato:', error);
+        console.error('Error deleting messages:', error);
     }
 }
 
 bot.on('message', async msg => {
-    const chatId = msg.from.id;
+    const chatId = msg.chat.id;
     const text = msg.text;
     const messageId = msg.message_id;
 
@@ -61,7 +60,7 @@ bot.on('message', async msg => {
         await editOnOf(chatId);
     }
 
-    // Admin tugmalari bosilganda, xabarlar to'plamini o'chirib tashlash
+    // Admin buttons pressed, clear previous messages
     if (adminKeyboard.some(row => row.some(btn => btn.text === text))) {
         clearChatBefore(chatId, messageId);
     }
