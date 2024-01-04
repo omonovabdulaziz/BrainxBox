@@ -1,5 +1,5 @@
 const {bot} = require('../bot')
-const {adminKeyboard} = require('../menu/keyboard')
+const {adminKeyboard} = require('../message')
 
 const start = async (chatId) => {
     if (chatId == process.env.ADMINCHATID) {
