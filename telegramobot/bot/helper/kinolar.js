@@ -137,7 +137,15 @@ const add_movie = async (chatId) => {
                         await axios.post(`${process.env.MAINAPI}/api/v1/subtitleWords/addSubtitle/${id}`, formData, {
                             headers, params: requestData,
                         });
-                        await bot.sendMessage(chatId, 'Subtitle uploaded successfully to ' + movieInfo.name);
+
+                        await bot.sendMessage(chatId, 'Subtitle uploaded successfully to ' + movieInfo.name, {
+                            reply_markup: {
+                                inline_keyboard: [[{
+                                    text: 'New Movie', callback_data: `add_movie`
+                                }]]
+                            }
+                        });
+
                     } catch (error) {
                         console.error('Error uploading subtitle:', error);
                     }
