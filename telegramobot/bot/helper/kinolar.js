@@ -59,8 +59,7 @@ const get_all_serials = async (chatId, page = 0) => {
                 bot.sendMessage(chatId, 'Seriallar ro`yxati', {
                     reply_markup: {
                         inline_keyboard: [...serialButtons, [{
-                            text: 'Ortga',
-                            callback_data: page === 0 ? '0' : 'back_serial_page_pagination'
+                            text: 'Ortga', callback_data: page === 0 ? '0' : 'back_serial_page_pagination'
                         }, {text: page, callback_data: '0'}, {
                             text: 'Keyingi',
                             callback_data: allResponse.totalPages === pageCalc ? '0' : 'next_serial_page_pagination'
@@ -107,14 +106,14 @@ const add_movie = async (chatId) => {
             console.log(movieInfo.description);
             const apiUrl = process.env.MAINAPI + '/api/v1/movie/addMovie';
             const headers = {
-                Authorization: `Bearer ${process.env.BEKENDTOKEN}`,
-                'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env.BEKENDTOKEN}`, 'Content-Type': 'application/json',
             };
             const response = await axios.post(apiUrl, movieInfo, {headers});
 
             if (response.status === 200) {
                 console.log(response.data);
-                const id = response.data.id; // Get the ID from the response
+                const id = response.data.object; // Get the ID from the response
+                console.log(id)
                 bot.sendMessage(chatId, 'Kino qo`shildi ');
 
                 // Iltimos subtitleni yuklang
@@ -132,8 +131,7 @@ const add_movie = async (chatId) => {
                     formData.append('file', response.data, {filename: 'subtitle_file.txt'});
 
                     const headers = {
-                        'Authorization': `Bearer ${process.env.BEKENDTOKEN}`,
-                        ...formData.getHeaders(),
+                        'Authorization': `Bearer ${process.env.BEKENDTOKEN}`, ...formData.getHeaders(),
                     };
 
                     const requestData = {
@@ -142,8 +140,7 @@ const add_movie = async (chatId) => {
 
                     try {
                         await axios.post(`${process.env.MAINAPI}/api/v1/subtitleWords/addSubtitle/${id}`, formData, {
-                            headers,
-                            params: requestData,
+                            headers, params: requestData,
                         });
                         await bot.sendMessage(chatId, 'Subtitle uploaded successfully');
                     } catch (error) {
