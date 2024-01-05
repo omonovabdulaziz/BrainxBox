@@ -7,6 +7,7 @@ from deep_translator import GoogleTranslator
 from tqdm import tqdm
 from langdetect import detect
 import concurrent.futures
+import html2text
 
 app = FastAPI()
 
@@ -92,12 +93,17 @@ def try_different_encodings(file_content):
 
 
 def eliminate_patterns(text):
-    html_pattern = r'<[^>]+>'
+    html_converter = html2text.HTML2Text()
+    html_converter.ignore_links = True
+    html_converter.ignore_images = True
+    html_converter.ignore_emphasis = True
 
-    cleaned_text = re.sub(html_pattern, '', text)
+    cleaned_text = html_converter.handle(text)
 
-    additional_patterns_to_eliminate = [r'<i>', r'\.<i>', r'\[', r'\]', r'\,<i>', r'\.</i>', r'\,</i>', r'</i>',
-                                        r'.</i>', r',</i>']
+    additional_patterns_to_eliminate = [
+        r'\[', r'\]', r'\.',
+        r'<i>', r'\.<i>', r'\,</i>', r'\.</i>', r'\,</i>', r'</i>', r'.</i>', r',</i>',
+    ]
 
     additional_pattern = '|'.join(re.escape(p) for p in additional_patterns_to_eliminate)
 
