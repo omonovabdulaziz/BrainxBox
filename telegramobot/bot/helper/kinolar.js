@@ -104,7 +104,7 @@ const add_movie = async (chatId) => {
     if (process.env.ADMINCHATID == chatId) {
         try {
             const movieInfo = await askForAddingMovie(chatId);
-            console.log(movieInfo.description)
+            console.log(movieInfo.description);
             const apiUrl = process.env.MAINAPI + '/api/v1/movie/addMovie';
             const headers = {
                 Authorization: `Bearer ${process.env.BEKENDTOKEN}`,
@@ -114,7 +114,7 @@ const add_movie = async (chatId) => {
 
             if (response.status === 200) {
                 console.log(response.data);
-                const id = response.data.object;
+                const id = response.data.id; // Get the ID from the response
                 bot.sendMessage(chatId, 'Kino qo`shildi ');
 
                 // Iltimos subtitleni yuklang
