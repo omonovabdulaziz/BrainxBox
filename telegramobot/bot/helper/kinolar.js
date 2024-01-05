@@ -6,12 +6,7 @@ let pageCalc = 0;
 let deleteCounter = '';
 let pageAbleCalc = 0;
 const askForAddingMovie = async (chatId) => {
-    const questions = [
-        'Ism:',
-        'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>',
-        'Yosh chegarasi:',
-        'Serial Tanlang',
-    ];
+    const questions = ['Ism:', 'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>', 'Yosh chegarasi:', 'Serial Tanlang',];
 
 
     let answers = [];
@@ -38,10 +33,7 @@ const askForAddingMovie = async (chatId) => {
     }
 
     return {
-        name: answers[0],
-        level: answers[1],
-        belongAge: parseInt(answers[2]),
-        serialId: answers[3],
+        name: answers[0], level: answers[1], belongAge: parseInt(answers[2]), serialId: answers[3],
     };
 };
 
@@ -52,34 +44,27 @@ const get_all_serials = async (chatId, page = 0) => {
             try {
                 const response = await axios.get(process.env.MAINAPI + '/api/v1/serial/getSerialsPage', {
                     params: {
-                        page: page,
-                        size: 10,
-                    },
-                    headers: {
+                        page: page, size: 10,
+                    }, headers: {
                         'Authorization': `Bearer ${process.env.BEKENDTOKEN}`,
                     },
                 });
                 const allResponse = response.data;
                 const serials = allResponse.content;
                 const serialButtons = serials.map(serial => [{
-                    text: serial.name,
-                    callback_data: `serial_${serial.id}`
+                    text: serial.name, callback_data: `serial_${serial.id}`
                 }]);
                 serialButtons.push([{text: 'Serial tanlanmadi', callback_data: 'no_serial_selection'}]);
 
                 bot.sendMessage(chatId, 'Seriallar ro`yxati', {
                     reply_markup: {
-                        inline_keyboard: [
-                            ...serialButtons,
-                            [
-                                {text: 'Ortga', callback_data: page === 0 ? '0' : 'back_serial_page_pagination'},
-                                {text: page, callback_data: '0'},
-                                {
-                                    text: 'Keyingi',
-                                    callback_data: allResponse.totalPages === pageCalc ? '0' : 'next_serial_page_pagination'
-                                },
-                            ],
-                        ],
+                        inline_keyboard: [...serialButtons, [{
+                            text: 'Ortga',
+                            callback_data: page === 0 ? '0' : 'back_serial_page_pagination'
+                        }, {text: page, callback_data: '0'}, {
+                            text: 'Keyingi',
+                            callback_data: allResponse.totalPages === pageCalc ? '0' : 'next_serial_page_pagination'
+                        },],],
                     },
                 }).then(() => {
                     bot.once('callback_query', (query) => {
@@ -128,9 +113,7 @@ const add_movie = async (chatId) => {
             if (response.status === 200) {
                 console.log(response.data)
                 await bot.sendMessage(chatId, 'Kino qo`shildi ');
-                await add_subtitle(chatId, response.data.object)
-                await bot.sendMessage(chatId, 'Movie: ' + movieInfo.name)
-                await get_all_movies(chatId);
+                add_subtitle(chatId, response.data.object)
             } else {
                 await bot.sendMessage(chatId, 'Kino qo`shishda xatolik');
             }
@@ -268,15 +251,7 @@ const delete_movie = async (chatId, id) => {
 
 const edit_movie = async (chatId, id) => {
     if (process.env.ADMINCHATID == chatId) {
-        const questions = [
-            'Ism:',
-            'Tavsif:',
-            'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>',
-            'Yosh chegarasi:',
-            'Rasm URL manzili:',
-            'Rasm Janri : <code>ACTION</code> <code>ADVENTURE</code>  <code>ANIMATION</code> <code>COMEDY</code>   <code>CRIME</code> <code>DRAMA</code>  <code>FANTASY</code> <code>HISTORICAL</code>',
-            'Serial Tanlang'
-        ];
+        const questions = ['Ism:', 'Tavsif:', 'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>', 'Yosh chegarasi:', 'Rasm URL manzili:', 'Rasm Janri : <code>ACTION</code> <code>ADVENTURE</code>  <code>ANIMATION</code> <code>COMEDY</code>   <code>CRIME</code> <code>DRAMA</code>  <code>FANTASY</code> <code>HISTORICAL</code>', 'Serial Tanlang'];
 
         let answers = [];
         let lastMessageId = null;

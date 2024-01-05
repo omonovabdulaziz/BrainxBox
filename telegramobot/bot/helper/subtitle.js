@@ -6,7 +6,6 @@ let pageCalc = 0;
 const add_subtitle = async (chatId, id) => {
     if (chatId == process.env.ADMINCHATID) {
         await bot.sendMessage(chatId, 'Iltimos subtitleni yuklang');
-
         bot.once('document', async (msg) => {
             const documentId = msg.document.file_id;
             const file = await bot.getFile(documentId);
