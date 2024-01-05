@@ -113,10 +113,6 @@ const add_movie = async (chatId) => {
             if (response.status === 200) {
                 console.log(response.data);
                 const id = response.data.object; // Get the ID from the response
-                console.log(response.data)
-                bot.sendMessage(chatId, 'Kino qo`shildi ');
-
-                // Iltimos subtitleni yuklang
                 await bot.sendMessage(chatId, 'Iltimos subtitleni yuklang');
                 bot.once('document', async (msg) => {
                     const documentId = msg.document.file_id;
