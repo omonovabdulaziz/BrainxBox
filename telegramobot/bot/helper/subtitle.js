@@ -5,7 +5,7 @@ let pageCalc = 0;
 
 
 const add_subtitle = async (chatId, id) => {
-    if (chatId == process.env.ADMINCHATID) {
+    if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
         await bot.sendMessage(chatId, 'Iltimos subtitleni yuklang');
         bot.once('document', async (msg) => {
             const documentId = msg.document.file_id;
@@ -17,7 +17,7 @@ const add_subtitle = async (chatId, id) => {
                 responseType: 'arraybuffer',
             });
             const formData = new FormData();
-            formData.append('file', response.data, { filename: 'subtitle_file.txt' });
+            formData.append('file', response.data, {filename: 'subtitle_file.txt'});
 
             const headers = {
                 'Authorization': `Bearer ${process.env.BEKENDTOKEN}`,
@@ -44,7 +44,7 @@ const add_subtitle = async (chatId, id) => {
 };
 
 const get_all_movie_for_subtitle = async (chatId, page = 0) => {
-    if (chatId == process.env.ADMINCHATID) {
+    if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
         try {
             const response = await axios.get(process.env.MAINAPI + '/api/v1/movie/getAllMoviePage', {
                 params: {

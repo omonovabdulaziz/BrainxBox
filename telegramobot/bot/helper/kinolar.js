@@ -40,7 +40,7 @@ const askForAddingMovie = async (chatId) => {
 
 const get_all_serials = async (chatId, page = 0) => {
     return new Promise(async (resolve) => {
-        if (chatId == process.env.ADMINCHATID) {
+        if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
             try {
                 const response = await axios.get(process.env.MAINAPI + '/api/v1/serial/getSerialsPage', {
                     params: {
@@ -100,7 +100,7 @@ const pageableforSerials = async (chatId, action) => {
 
 
 const add_movie = async (chatId) => {
-    if (process.env.ADMINCHATID == chatId) {
+    if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
         try {
             const movieInfo = await askForAddingMovie(chatId);
             const apiUrl = process.env.MAINAPI + '/api/v1/movie/addMovie';
@@ -164,7 +164,7 @@ const add_movie = async (chatId) => {
 
 
 const get_all_movies = async (chatId, page = 0) => {
-    if (chatId == process.env.ADMINCHATID) {
+    if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
         try {
             const response = await axios.get(process.env.MAINAPI + '/api/v1/movie/getAllMoviePage', {
                 params: {
@@ -201,7 +201,7 @@ const get_all_movies = async (chatId, page = 0) => {
 
 
 const show_movie = async (chatId, id) => {
-    if (chatId == process.env.ADMINCHATID) {
+    if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
         deleteCounter = ''
         try {
             const response = await axios.get(process.env.MAINAPI + `/api/v1/movie/getMovie/${id}`, {
@@ -251,7 +251,7 @@ const pagination_movie = async (chatId, action) => {
 
 const delete_movie = async (chatId, id) => {
     console.log(id)
-    if (chatId == process.env.ADMINCHATID) {
+    if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
         if (deleteCounter === 'delete_movie') {
             deleteCounter = ''
             try {
@@ -286,7 +286,7 @@ const delete_movie = async (chatId, id) => {
 
 
 const edit_movie = async (chatId, id) => {
-    if (process.env.ADMINCHATID == chatId) {
+    if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
         const questions = ['Ism:', 'Tavsif:', 'Daraja: <code>INTERMEDIATE</code> <code>BEGINNER</code> <code>ELEMENTARY</code> <code>UPPER_INTERMEDIATE</code>', 'Yosh chegarasi:', 'Rasm URL manzili:', 'Rasm Janri : <code>ACTION</code> <code>ADVENTURE</code>  <code>ANIMATION</code> <code>COMEDY</code>   <code>CRIME</code> <code>DRAMA</code>  <code>FANTASY</code> <code>HISTORICAL</code>', 'Serial Tanlang'];
 
         let answers = [];

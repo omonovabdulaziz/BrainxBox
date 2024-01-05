@@ -180,7 +180,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<RequestMovie> getAllRequestPage(int page, int size) {
-        return requestMovieRepository.findAll(of(page, size));
+        return requestMovieRepository.findAll(of(page, size , Sort.by("createdAt").descending()));
 
     }
 

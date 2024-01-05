@@ -1,7 +1,7 @@
 const {bot} = require('../bot')
 
 const start = async (chatId) => {
-    if (chatId == process.env.ADMINCHATID) {
+    if (process.env.ADMINCHATID == chatId || process.env.ADMINCHATID2 == chatId) {
         bot.sendMessage(chatId, 'Choose from menu Admin', {
             reply_markup: {
                 keyboard: [[{
