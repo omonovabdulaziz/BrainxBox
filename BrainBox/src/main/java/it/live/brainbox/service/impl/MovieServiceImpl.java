@@ -47,6 +47,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public ResponseEntity<ApiResponse> addMovie(MovieDTO movieDTO) {
+        if (movieRepository.existsByNameIgnoreCase(movieDTO.getName()))
+            throw new MainException("Bunday nomli kino mavjud");
         Movie movie = movieMapper.toEntity(movieDTO);
         List<String> imageOfMovie = getImageOfMovie(movieDTO.getName());
         assert imageOfMovie != null;
