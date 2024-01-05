@@ -1,6 +1,6 @@
 const axios = require('axios');
 const {bot} = require('../bot');
-const {add_subtitle} = require("./subtitle");
+const FormData = require('form-data');
 
 let pageCalc = 0;
 let deleteCounter = '';
