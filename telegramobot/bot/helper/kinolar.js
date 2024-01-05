@@ -107,13 +107,49 @@ const add_movie = async (chatId) => {
             console.log(movieInfo.description)
             const apiUrl = process.env.MAINAPI + '/api/v1/movie/addMovie';
             const headers = {
-                Authorization: `Bearer ${process.env.BEKENDTOKEN}`, 'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env.BEKENDTOKEN}`,
+                'Content-Type': 'application/json',
             };
             const response = await axios.post(apiUrl, movieInfo, {headers});
+
             if (response.status === 200) {
-                console.log(response.data)
-                await bot.sendMessage(chatId, 'Kino qo`shildi ');
-                add_subtitle(chatId, response.data.object)
+                console.log(response.data);
+                const id = response.data.object;
+                bot.sendMessage(chatId, 'Kino qo`shildi ');
+
+                // Iltimos subtitleni yuklang
+                await bot.sendMessage(chatId, 'Iltimos subtitleni yuklang');
+                bot.once('document', async (msg) => {
+                    const documentId = msg.document.file_id;
+                    const file = await bot.getFile(documentId);
+
+                    const response = await axios({
+                        method: 'get',
+                        url: `https://api.telegram.org/file/bot${process.env.TOKEN}/${file.file_path}`,
+                        responseType: 'arraybuffer',
+                    });
+                    const formData = new FormData();
+                    formData.append('file', response.data, {filename: 'subtitle_file.txt'});
+
+                    const headers = {
+                        'Authorization': `Bearer ${process.env.BEKENDTOKEN}`,
+                        ...formData.getHeaders(),
+                    };
+
+                    const requestData = {
+                        languageId: 1,
+                    };
+
+                    try {
+                        await axios.post(`${process.env.MAINAPI}/api/v1/subtitleWords/addSubtitle/${id}`, formData, {
+                            headers,
+                            params: requestData,
+                        });
+                        await bot.sendMessage(chatId, 'Subtitle uploaded successfully');
+                    } catch (error) {
+                        console.error('Error uploading subtitle:', error);
+                    }
+                });
             } else {
                 await bot.sendMessage(chatId, 'Kino qo`shishda xatolik');
             }
