@@ -3,6 +3,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 let pageCalc = 0;
 
+
 const add_subtitle = async (chatId, id) => {
     if (chatId == process.env.ADMINCHATID) {
         await bot.sendMessage(chatId, 'Iltimos subtitleni yuklang');
@@ -37,7 +38,6 @@ const add_subtitle = async (chatId, id) => {
                 console.error('Error uploading subtitle:', error);
             }
         });
-
     } else {
         bot.sendMessage(chatId, 'Damingni ol');
     }
