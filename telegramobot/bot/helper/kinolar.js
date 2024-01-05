@@ -1,5 +1,6 @@
 const axios = require('axios');
 const {bot} = require('../bot');
+const {add_subtitle} = require("./subtitle");
 
 let pageCalc = 0;
 let deleteCounter = '';
@@ -22,7 +23,7 @@ const askForAddingMovie = async (chatId) => {
         }
 
         const question = questions[i];
-        const response = await bot.sendMessage(chatId, question, { parse_mode: 'HTML' });
+        const response = await bot.sendMessage(chatId, question, {parse_mode: 'HTML'});
         lastMessageId = response.message_id;
 
         if (i === questions.length - 1) {
@@ -60,17 +61,23 @@ const get_all_serials = async (chatId, page = 0) => {
                 });
                 const allResponse = response.data;
                 const serials = allResponse.content;
-                const serialButtons = serials.map(serial => [{ text: serial.name, callback_data: `serial_${serial.id}` }]);
-                serialButtons.push([{ text: 'Serial tanlanmadi', callback_data: 'no_serial_selection' }]);
+                const serialButtons = serials.map(serial => [{
+                    text: serial.name,
+                    callback_data: `serial_${serial.id}`
+                }]);
+                serialButtons.push([{text: 'Serial tanlanmadi', callback_data: 'no_serial_selection'}]);
 
                 bot.sendMessage(chatId, 'Seriallar ro`yxati', {
                     reply_markup: {
                         inline_keyboard: [
                             ...serialButtons,
                             [
-                                { text: 'Ortga', callback_data: page === 0 ? '0' : 'back_serial_page_pagination' },
-                                { text: page, callback_data: '0' },
-                                { text: 'Keyingi', callback_data: allResponse.totalPages === pageCalc ? '0' : 'next_serial_page_pagination' },
+                                {text: 'Ortga', callback_data: page === 0 ? '0' : 'back_serial_page_pagination'},
+                                {text: page, callback_data: '0'},
+                                {
+                                    text: 'Keyingi',
+                                    callback_data: allResponse.totalPages === pageCalc ? '0' : 'next_serial_page_pagination'
+                                },
                             ],
                         ],
                     },
@@ -120,17 +127,19 @@ const add_movie = async (chatId) => {
             const response = await axios.post(apiUrl, movieInfo, {headers});
             if (response.status === 200) {
                 console.log(response.data)
-                bot.sendMessage(chatId, 'Kino qo`shildi');
-                get_all_movies(chatId);
+                await bot.sendMessage(chatId, 'Kino qo`shildi ');
+                await add_subtitle(chatId, response.data.object)
+                await bot.sendMessage(chatId, 'Movie: ' + movieInfo.name)
+                await get_all_movies(chatId);
             } else {
-                bot.sendMessage(chatId, 'Kino qo`shishda xatolik');
+                await bot.sendMessage(chatId, 'Kino qo`shishda xatolik');
             }
         } catch (error) {
             console.error(error);
-            bot.sendMessage(chatId, 'An error occurred while processing your request.');
+            await bot.sendMessage(chatId, 'An error occurred while processing your request.');
         }
     } else {
-        bot.sendMessage(chatId, 'Damingni ol');
+        await bot.sendMessage(chatId, 'Damingni ol');
     }
 };
 
@@ -257,7 +266,6 @@ const delete_movie = async (chatId, id) => {
 }
 
 
-
 const edit_movie = async (chatId, id) => {
     if (process.env.ADMINCHATID == chatId) {
         const questions = [
@@ -279,7 +287,7 @@ const edit_movie = async (chatId, id) => {
             }
 
             const question = questions[i];
-            const response = await bot.sendMessage(chatId, question, { parse_mode: 'HTML' });
+            const response = await bot.sendMessage(chatId, question, {parse_mode: 'HTML'});
             lastMessageId = response.message_id;
 
             if (i === questions.length - 1) {
@@ -321,8 +329,6 @@ const edit_movie = async (chatId, id) => {
         await bot.sendMessage(chatId, 'Sizda bu amalni bajarish huquqi yo\'q.');
     }
 };
-
-
 
 
 module.exports = {

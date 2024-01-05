@@ -54,8 +54,8 @@ public class MovieServiceImpl implements MovieService {
         movie.setGenre(!Objects.equals(imageOfMovie.get(1), "null") ? imageOfMovie.get(1).split(", ")[0] : "ADVENTURE");
         movie.setDescription(!Objects.equals(imageOfMovie.get(2), "null") ? imageOfMovie.get(2) : "Movie is Very Good. This Movie .....");
         movie.setPrice(35);
-        movieRepository.save(movie);
-        return ResponseEntity.ok(ApiResponse.builder().status(200).message("Movie saved").build());
+        Movie save = movieRepository.save(movie);
+        return ResponseEntity.ok(ApiResponse.builder().status(200).message("Movie saved").object(save.getId()).build());
     }
 
     @Override
