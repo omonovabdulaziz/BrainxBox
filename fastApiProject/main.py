@@ -145,7 +145,6 @@ async def upload_essential(book_id: int, file: UploadFile = File(...)):
         content = content.decode('utf-8')
 
         word_lists = content.split('\n')
-        response_dict = {}
 
         try:
             connection = psycopg2.connect(
@@ -162,26 +161,18 @@ async def upload_essential(book_id: int, file: UploadFile = File(...)):
 
             for i, word_list in enumerate(word_lists):
                 words = word_list.strip().split(',')
-                word_objects = []
 
                 for j, word in enumerate(words[:30]):
-                    translation_entry = translate_word_threaded(word, f"{j + 1}")
-                    if translation_entry:
-                        word_objects.append(translation_entry.__dict__)
+                    word_count += 1
 
-                        # So'zlar sonini hisoblash
-                        word_count += 1
+                    if word_count % 20 == 0 and word_count != 0:
+                        unit_id += 1
 
-                        if word_count % 20 == 0 and word_count != -1:
-                            unit_id += 1
-
-                        translation_en = GoogleTranslator(source='en', target='uz').translate(word)
-                        translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
-                        cursor.execute(
-                            "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
-                            (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
-
-                response_dict[str(i + 1)] = {"words": word_objects}
+                    translation_en = GoogleTranslator(source='en', target='uz').translate(word)
+                    translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
+                    cursor.execute(
+                        "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
+                        (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
 
                 connection.commit()
 
