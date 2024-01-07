@@ -11,7 +11,7 @@ import html2text
 import psycopg2
 
 # database
-host = "postgres"
+host = "localhost"
 port = 5432
 database = "first_db"
 user = "postgres"
@@ -162,10 +162,8 @@ async def upload_essential(book_id: int, file: UploadFile = File(...)):
                 words = word_list.strip().split(',')
 
                 for j, word in enumerate(words[:30]):
-
-                    if word_count % 20 == 0:
+                    if word_count % 20 == 0 and word_count != 0:
                         unit_id += 1
-
                     if word.strip():  # Check if the word is not empty
                         word_count += 1
                         translation_en = GoogleTranslator(source='en', target='uz').translate(word)
