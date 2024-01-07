@@ -1,3 +1,4 @@
+it\live\brainbox\repository\EssentialRepository.class
 it\live\brainbox\BrainBoxApplication.class
 it\live\brainbox\entity\Serial$SerialBuilder.class
 it\live\brainbox\repository\UserRepository.class
@@ -12,6 +13,7 @@ it\live\brainbox\utils\WordDefinitionApi$1.class
 it\live\brainbox\exception\AuthException.class
 it\live\brainbox\jwt\JwtProvider.class
 it\live\brainbox\payload\Pronunciation.class
+it\live\brainbox\controller\EssentialController.class
 it\live\brainbox\service\impl\UserServiceImpl.class
 it\live\brainbox\entity\SubtitleWord.class
 it\live\brainbox\jwt\JwtFilter.class
