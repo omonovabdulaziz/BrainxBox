@@ -11,7 +11,7 @@ import html2text
 import psycopg2
 
 # database
-host = "localhost"
+host = "postgres"
 port = 5432
 database = "first_db"
 user = "postgres"
