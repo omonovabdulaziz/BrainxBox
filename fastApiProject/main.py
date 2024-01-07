@@ -156,18 +156,18 @@ async def upload_essential(book_id: int, file: UploadFile = File(...)):
 
             cursor = connection.cursor()
             unit_id = 1  # Boshlang'ich unit_id
-            word_count = -1  # So'zlar sonini hisoblash uchun o'zgaruvchi
+            word_count = 0  # So'zlar sonini hisoblash uchun o'zgaruvchi
 
             for i, word_list in enumerate(word_lists):
                 words = word_list.strip().split(',')
 
                 for j, word in enumerate(words[:30]):
-                    word_count += 1
 
-                    if word_count % 20 == 0 and word_count != 0:
+                    if word_count % 20 == 0:
                         unit_id += 1
 
                     if word.strip():  # Check if the word is not empty
+                        word_count += 1
                         translation_en = GoogleTranslator(source='en', target='uz').translate(word)
                         translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
                         cursor.execute(
