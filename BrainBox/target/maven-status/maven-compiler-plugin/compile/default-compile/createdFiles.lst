@@ -27,6 +27,7 @@ it\live\brainbox\entity\Language$LanguageBuilder.class
 it\live\brainbox\payload\WordDefinitionApiDTO.class
 it\live\brainbox\exceptionHandler\ExceptionsHandler.class
 it\live\brainbox\controller\EnumController.class
+it\live\brainbox\entity\EssentialWords.class
 it\live\brainbox\entity\SavedWord$SavedWordBuilder.class
 it\live\brainbox\service\PremiumService.class
 it\live\brainbox\service\impl\SerialServiceImpl.class
@@ -94,6 +95,7 @@ it\live\brainbox\controller\MovieController.class
 it\live\brainbox\service\SerialService.class
 it\live\brainbox\exception\MainException.class
 it\live\brainbox\payload\Pronunciation$PronunciationBuilder.class
+it\live\brainbox\entity\EssentialWords$EssentialWordsBuilder.class
 it\live\brainbox\entity\enums\SystemRoleName.class
 it\live\brainbox\controller\SubtitlesController.class
 it\live\brainbox\controller\PremiumController.class
