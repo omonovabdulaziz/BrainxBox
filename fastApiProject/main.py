@@ -143,7 +143,6 @@ async def upload_essential(book_id: int, file: UploadFile = File(...)):
     if file.content_type == "text/plain":
         content = await file.read()
         content = content.decode('utf-8')
-
         word_lists = content.split('\n')
 
         try:
@@ -168,11 +167,12 @@ async def upload_essential(book_id: int, file: UploadFile = File(...)):
                     if word_count % 20 == 0 and word_count != 0:
                         unit_id += 1
 
-                    translation_en = GoogleTranslator(source='en', target='uz').translate(word)
-                    translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
-                    cursor.execute(
-                        "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
-                        (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
+                    if word.strip():  # Check if the word is not empty
+                        translation_en = GoogleTranslator(source='en', target='uz').translate(word)
+                        translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
+                        cursor.execute(
+                            "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
+                            (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
 
                 connection.commit()
 
