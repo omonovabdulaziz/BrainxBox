@@ -8,7 +8,16 @@ from tqdm import tqdm
 from langdetect import detect
 import concurrent.futures
 import html2text
+import psycopg2
 
+# database
+host = "localhost"
+port = 5432
+database = "first_db"
+user = "postgres"
+password = "omonov2006"
+
+# translate
 app = FastAPI()
 
 EXCLUDED_WORDS = {
@@ -18,8 +27,7 @@ EXCLUDED_WORDS = {
     "his", "her", "hers", "its", "we", "us", "our", "ours",
     "your", "yours", "their", "theirs",
 }
-
-translated_words = set()  # Qo'shilgan so'zlarni saqlash uchun to'plam
+translated_words = set()
 
 
 class TranslationEntry:
@@ -55,11 +63,11 @@ def remove_non_english_words(data):
 
 
 def translate_word_threaded(word, count):
-    if word.lower() in translated_words:  # Qo'shilgan so'zlarni tekshirish
+    if word.lower() in translated_words:
         return None
     translation_en = GoogleTranslator(source='en', target='uz').translate(word)
     translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
-    translated_words.add(word.lower())  # So'zni qo'shgan ekanini saqlash
+    translated_words.add(word.lower())
     return TranslationEntry(word.upper(), count, translation_en.capitalize(), translation_ru.capitalize())
 
 
@@ -128,6 +136,65 @@ async def upload_subtitle(subtitle_file: UploadFile = File(...)):
 
     except Exception as e:
         return JSONResponse(content={"message": f"Error processing file: {str(e)}"}, status_code=500)
+
+
+@app.post("/uploadEssential")
+async def upload_essential(book_id: int, file: UploadFile = File(...)):
+    if file.content_type == "text/plain":
+        content = await file.read()
+        content = content.decode('utf-8')
+
+        word_lists = content.split('\n')
+        response_dict = {}
+
+        try:
+            connection = psycopg2.connect(
+                host=host,
+                port=port,
+                database=database,
+                user=user,
+                password=password
+            )
+
+            cursor = connection.cursor()
+            unit_id = 1  # Boshlang'ich unit_id
+            word_count = -1  # So'zlar sonini hisoblash uchun o'zgaruvchi
+
+            for i, word_list in enumerate(word_lists):
+                words = word_list.strip().split(',')
+                word_objects = []
+
+                for j, word in enumerate(words[:30]):
+                    translation_entry = translate_word_threaded(word, f"{j + 1}")
+                    if translation_entry:
+                        word_objects.append(translation_entry.__dict__)
+
+                        # So'zlar sonini hisoblash
+                        word_count += 1
+
+                        if word_count % 20 == 0 and word_count != -1:
+                            unit_id += 1
+
+                        translation_en = GoogleTranslator(source='en', target='uz').translate(word)
+                        translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
+                        cursor.execute(
+                            "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
+                            (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
+
+                response_dict[str(i + 1)] = {"words": word_objects}
+
+                connection.commit()
+
+        except (Exception, psycopg2.Error) as error:
+            print("Xatolik yuz berdi:", error)
+
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+
+    else:
+        return {"error": "Faqat matn formatidagi fayllarni qabul qilamiz!"}
 
 
 if __name__ == "__main__":
