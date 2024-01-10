@@ -25,7 +25,7 @@ EXCLUDED_WORDS = {
     "that", "this", "at", "from", "by", "as", "an", "but", "or",
     "he", "she", "i", "me", "my", "mine", "you",
     "his", "her", "hers", "its", "we", "us", "our", "ours",
-    "your", "yours", "their", "theirs",
+    "your", "yours", "their", "theirs", "when", 'what', 'which', "how", "where", "who", "go",
 }
 translated_words = set()
 
