@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: it.live.brainbox.BrainBoxApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.132 s - in it.live.brainbox.BrainBoxApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.083 s - in it.live.brainbox.BrainBoxApplicationTests

@@ -3,7 +3,7 @@ const {start} = require("./helper/start");
 const {get_all_movies} = require("./helper/kinolar");
 const {get_all_movie_for_subtitle} = require('./helper/subtitle');
 const {get_all_serials} = require("./helper/serial");
-const {editOnOf} = require("./helper/d  eveloper");
+const {editOnOf} = require("./helper/developer");
 
 bot.on('message', async msg => {
     const chatId = msg.chat.id;
