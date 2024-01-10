@@ -66,6 +66,7 @@ public class MovieController {
         return movieService.searchMovie(keyWord, page, size);
     }
 
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/addRequestMovie")
     public ResponseEntity<ApiResponse> addRequestMovie(@RequestParam String request) {

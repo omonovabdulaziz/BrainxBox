@@ -165,6 +165,7 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> pageMovie = movieRepository.findAllByNameLikeIgnoreCase("%" + keyWord + "%");
         for (Movie movie : pageMovie) {
             movie.setIsBought(boughtMovieRepository.existsByUserIdAndMovieId(user.getId(), movie.getId()));
+            pageMovie.add(movie);
         }
         if (pageMovie.isEmpty()) {
             throw new NotFoundException("There is no movie with this name If you want it, please share the name of the movie with us");

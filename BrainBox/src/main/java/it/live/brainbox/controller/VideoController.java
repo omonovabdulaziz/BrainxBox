@@ -29,6 +29,4 @@ public class VideoController {
     public Page<Video> getVideo(@RequestParam int page, @RequestParam int size) {
         return videoService.getVideo(page, size);
     }
-
-
 }

@@ -1,5 +1,4 @@
 import concurrent.futures
-import json
 import re
 from collections import Counter
 
@@ -26,7 +25,8 @@ EXCLUDED_WORDS = {
     "that", "this", "at", "from", "by", "as", "an", "but", "or",
     "he", "she", "i", "me", "my", "mine", "you",
     "his", "her", "hers", "its", "we", "us", "our", "ours",
-    "your", "yours", "their", "theirs", "when", 'what', 'which', "how", "where", "who", "go",
+    "your", "yours", "their", "theirs", "when", 'what', 'which', "how", "where", "who", "go", "thank's", "thank",
+    "what's", "which's", "that's", "not", "it's", "they", "it'll", "they'll", "we're", "he's", "those", "don't", "couldn't", "hey", "isn't", "shouldn't", "there's", "off", "she's", "who's",
 }
 translated_words = set()
 
@@ -131,16 +131,13 @@ async def upload_subtitle(subtitle_file: UploadFile = File(...)):
         english_word_count_data = remove_non_english_words(word_count_data)
         translated_data = translate(english_word_count_data)
 
-        # Sort translated data by count in descending order
-        translated_data.sort(key=lambda entry: entry.count, reverse=True)
+        translated_data_dict = [entry.__dict__ for entry in translated_data]
 
-        # Limit the response to the top 350 translated words
-        top_350_translated_data = translated_data[:350]
-
-        return JSONResponse(content={"result": [entry.__dict__ for entry in top_350_translated_data]})
+        return JSONResponse(content={"result": translated_data_dict})
 
     except Exception as e:
         return JSONResponse(content={"message": f"Error processing file: {str(e)}"}, status_code=500)
+
 
 # @app.post("/uploadEssential")
 # async def upload_essential(book_id: int, file: UploadFile = File(...)):
