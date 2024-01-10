@@ -23,6 +23,7 @@ import it.live.brainbox.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -159,17 +160,16 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> searchMovie(String keyWord) {
+    public List<Movie> searchMovie(String keyWord, int page, int size) {
         User user = SecurityConfiguration.getOwnSecurityInformation();
-        List<Movie> movies = new ArrayList<>();
-        for (Movie movie : movieRepository.findAllByNameLikeIgnoreCase("%" + keyWord + "%").stream().toList()) {
+        List<Movie> pageMovie = movieRepository.findAllByNameLikeIgnoreCase("%" + keyWord + "%");
+        for (Movie movie : pageMovie) {
             movie.setIsBought(boughtMovieRepository.existsByUserIdAndMovieId(user.getId(), movie.getId()));
-            movies.add(movie);
         }
-        if (movies.isEmpty()) {
+        if (pageMovie.isEmpty()) {
             throw new NotFoundException("There is no movie with this name If you want it, please share the name of the movie with us");
         }
-        return movies;
+        return pageMovie;
     }
 
     @Override
@@ -180,7 +180,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<RequestMovie> getAllRequestPage(int page, int size) {
-        return requestMovieRepository.findAll(of(page, size , Sort.by("createdAt").descending()));
+        return requestMovieRepository.findAll(of(page, size, Sort.by("createdAt").descending()));
 
     }
 

@@ -1,4 +1,5 @@
 it\live\brainbox\repository\EssentialRepository.class
+it\live\brainbox\repository\VideoRepository.class
 it\live\brainbox\BrainBoxApplication.class
 it\live\brainbox\entity\Serial$SerialBuilder.class
 it\live\brainbox\repository\UserRepository.class
@@ -14,6 +15,7 @@ it\live\brainbox\exception\AuthException.class
 it\live\brainbox\jwt\JwtProvider.class
 it\live\brainbox\payload\Pronunciation.class
 it\live\brainbox\controller\EssentialController.class
+it\live\brainbox\service\impl\VideoServiceImpl.class
 it\live\brainbox\service\impl\UserServiceImpl.class
 it\live\brainbox\entity\SubtitleWord.class
 it\live\brainbox\jwt\JwtFilter.class
@@ -39,6 +41,7 @@ it\live\brainbox\controller\AuthController.class
 it\live\brainbox\repository\SubtitleRepository.class
 it\live\brainbox\service\impl\SubtitleServiceImpl.class
 it\live\brainbox\payload\MovieDTO.class
+it\live\brainbox\service\VideoService.class
 it\live\brainbox\service\AuthService.class
 it\live\brainbox\service\LanguageService.class
 it\live\brainbox\controller\BoughtMovieController.class
@@ -56,6 +59,7 @@ it\live\brainbox\service\impl\PremiumServiceImpl.class
 it\live\brainbox\payload\ApiResponse.class
 it\live\brainbox\payload\SubtitleWordDTO$SubtitleWordDTOBuilder.class
 it\live\brainbox\config\SecurityConfiguration.class
+it\live\brainbox\entity\Video.class
 it\live\brainbox\payload\Result.class
 it\live\brainbox\config\DataLoaderConfig.class
 it\live\brainbox\service\impl\BoughtServiceImpl.class
@@ -80,6 +84,7 @@ it\live\brainbox\repository\MovieRepository.class
 it\live\brainbox\entity\BoughtMovie.class
 it\live\brainbox\service\SubtitleService.class
 it\live\brainbox\repository\SavedWordRepository.class
+it\live\brainbox\entity\Video$VideoBuilder.class
 it\live\brainbox\service\impl\SavedWordServiceImpl.class
 it\live\brainbox\payload\Pronoun$PronounBuilder.class
 it\live\brainbox\payload\LanguageDTO.class
@@ -88,6 +93,7 @@ it\live\brainbox\repository\PremiumRepository.class
 it\live\brainbox\payload\SavedWordDto.class
 it\live\brainbox\service\impl\MovieServiceImpl.class
 it\live\brainbox\payload\ApiResponse$ApiResponseBuilder.class
+it\live\brainbox\controller\VideoController.class
 it\live\brainbox\service\MovieService.class
 it\live\brainbox\controller\SavedWordController.class
 it\live\brainbox\payload\WordDefClass.class

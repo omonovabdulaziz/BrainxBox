@@ -19,7 +19,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findAllBySerialId(Long serial_id);
 
-    List<Movie> findAllByNameLikeIgnoreCase(String s);
+    List<Movie> findAllByNameLikeIgnoreCase(String name);
 
     Boolean existsByNameIgnoreCase(String name);
 }

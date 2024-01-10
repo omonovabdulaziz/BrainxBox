@@ -2,6 +2,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\SubtitleServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\LanguageService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\PremiumUser.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\Video.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\AuthService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\mapper\MovieMapper.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\MovieServiceImpl.java
@@ -29,6 +30,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\BrainBoxApplication.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\SavedWordDto.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\SubtitlesController.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\VideoRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\BoughtMovieController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\LanguageDTO.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\UserDTO.java
@@ -45,6 +47,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\SubtitleWord.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\temp\AbsLongEntity.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\SavedWord.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\VideoController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\config\DataLoaderConfig.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\SerialService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\User.java
@@ -53,6 +56,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\PageSender.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\BoughtServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\enums\Genre.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\VideoService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\MovieRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\UserService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\jwt\JwtProvider.java
@@ -63,6 +67,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\mapper\SubtitleMapper.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\MovieController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\Result.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\VideoServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\MovieService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\temp\AbsUUIDEntity.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\SerialServiceImpl.java

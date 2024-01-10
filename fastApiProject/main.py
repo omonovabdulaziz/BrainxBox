@@ -1,21 +1,22 @@
+import concurrent.futures
+import json
 import re
 from collections import Counter
+
+import html2text
 import uvicorn
+from deep_translator import GoogleTranslator
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
-from deep_translator import GoogleTranslator
-from tqdm import tqdm
 from langdetect import detect
-import concurrent.futures
-import html2text
-import psycopg2
+from tqdm import tqdm
 
 # database
-host = "db-postgresql-nyc3-81237-do-user-15462980-0.c.db.ondigitalocean.com"
-port = "25060"
-database = "defaultdb"
-user = "doadmin"
-password = "AVNS_j4xosrrSEZT8oPCk9Aj"
+# host =
+# port =
+# database =
+# user =
+# password =
 
 # translate
 app = FastAPI()
@@ -130,66 +131,69 @@ async def upload_subtitle(subtitle_file: UploadFile = File(...)):
         english_word_count_data = remove_non_english_words(word_count_data)
         translated_data = translate(english_word_count_data)
 
-        translated_data_dict = [entry.__dict__ for entry in translated_data]
+        # Sort translated data by count in descending order
+        translated_data.sort(key=lambda entry: entry.count, reverse=True)
 
-        return JSONResponse(content={"result": translated_data_dict})
+        # Limit the response to the top 350 translated words
+        top_350_translated_data = translated_data[:350]
+
+        return JSONResponse(content={"result": [entry.__dict__ for entry in top_350_translated_data]})
 
     except Exception as e:
         return JSONResponse(content={"message": f"Error processing file: {str(e)}"}, status_code=500)
 
-
-@app.post("/uploadEssential")
-async def upload_essential(book_id: int, file: UploadFile = File(...)):
-    if file.content_type == "text/plain":
-        content = await file.read()
-        content = content.decode('utf-8')
-        word_lists = content.split('\n')
-
-        try:
-            connection = psycopg2.connect(
-                host=host,
-                port=port,
-                database=database,
-                user=user,
-                password=password
-            )
-
-            cursor = connection.cursor()
-            word_count = 0  # So'zlar sonini hisoblash uchun o'zgaruvchi
-            unit_id = 0  # Unit_id 1 dan boshlansin
-
-            for i, word_list in enumerate(word_lists):
-                words = word_list.strip().split(',')
-
-                for word in words:
-                    if word.strip():  # Check if the word is not empty
-                        word_count += 1
-
-                        if word_count % 20 == 1:
-                            unit_id += 1
-
-                        translation_en = GoogleTranslator(source='en', target='uz').translate(word)
-                        translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
-                        cursor.execute(
-                            "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
-                            (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
-
-                connection.commit()
-
-                # Check if we have reached 600 words
-                if word_count >= 600:
-                    break
-
-        except (Exception, psycopg2.Error) as error:
-            print("Xatolik yuz berdi:", error)
-
-        finally:
-            if connection:
-                cursor.close()
-                connection.close()
-
-    else:
-        return {"error": "Faqat matn formatidagi fayllarni qabul qilamiz!"}
+# @app.post("/uploadEssential")
+# async def upload_essential(book_id: int, file: UploadFile = File(...)):
+#     if file.content_type == "text/plain":
+#         content = await file.read()
+#         content = content.decode('utf-8')
+#         word_lists = content.split('\n')
+#
+#         try:
+#             connection = psycopg2.connect(
+#                 host=host,
+#                 port=port,
+#                 database=database,
+#                 user=user,
+#                 password=password
+#             )
+#
+#             cursor = connection.cursor()
+#             word_count = 0  # So'zlar sonini hisoblash uchun o'zgaruvchi
+#             unit_id = 0  # Unit_id 1 dan boshlansin
+#
+#             for i, word_list in enumerate(word_lists):
+#                 words = word_list.strip().split(',')
+#
+#                 for word in words:
+#                     if word.strip():  # Check if the word is not empty
+#                         word_count += 1
+#
+#                         if word_count % 20 == 1:
+#                             unit_id += 1
+#
+#                         translation_en = GoogleTranslator(source='en', target='uz').translate(word)
+#                         translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
+#                         cursor.execute(
+#                             "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
+#                             (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
+#
+#                 connection.commit()
+#
+#                 # Check if we have reached 600 words
+#                 if word_count >= 600:
+#                     break
+#
+#         except (Exception, psycopg2.Error) as error:
+#             print("Xatolik yuz berdi:", error)
+#
+#         finally:
+#             if connection:
+#                 cursor.close()
+#                 connection.close()
+#
+#     else:
+#         return {"error": "Faqat matn formatidagi fayllarni qabul qilamiz!"}
 
 
 if __name__ == "__main__":
