@@ -11,11 +11,11 @@ import html2text
 import psycopg2
 
 # database
-# host = "postgres"
-# port = 5432
-# database = "first_db"
-# user = "postgres"
-# password = "omonov2006"
+host = "db-postgresql-nyc3-81237-do-user-15462980-0.c.db.ondigitalocean.com"
+port = "25060"
+database = "defaultdb"
+user = "doadmin"
+password = "AVNS_j4xosrrSEZT8oPCk9Aj"
 
 # translate
 app = FastAPI()
@@ -138,58 +138,58 @@ async def upload_subtitle(subtitle_file: UploadFile = File(...)):
         return JSONResponse(content={"message": f"Error processing file: {str(e)}"}, status_code=500)
 
 
-# @app.post("/uploadEssential")
-# async def upload_essential(book_id: int, file: UploadFile = File(...)):
-#     if file.content_type == "text/plain":
-#         content = await file.read()
-#         content = content.decode('utf-8')
-#         word_lists = content.split('\n')
-#
-#         try:
-#             connection = psycopg2.connect(
-#                 host=host,
-#                 port=port,
-#                 database=database,
-#                 user=user,
-#                 password=password
-#             )
-#
-#             cursor = connection.cursor()
-#             word_count = 0  # So'zlar sonini hisoblash uchun o'zgaruvchi
-#             unit_id = 0  # Unit_id 1 dan boshlansin
-#
-#             for i, word_list in enumerate(word_lists):
-#                 words = word_list.strip().split(',')
-#
-#                 for word in words:
-#                     if word.strip():  # Check if the word is not empty
-#                         word_count += 1
-#
-#                         if word_count % 20 == 1:
-#                             unit_id += 1
-#
-#                         translation_en = GoogleTranslator(source='en', target='uz').translate(word)
-#                         translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
-#                         cursor.execute(
-#                             "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
-#                             (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
-#
-#                 connection.commit()
-#
-#                 # Check if we have reached 600 words
-#                 if word_count >= 600:
-#                     break
-#
-#         except (Exception, psycopg2.Error) as error:
-#             print("Xatolik yuz berdi:", error)
-#
-#         finally:
-#             if connection:
-#                 cursor.close()
-#                 connection.close()
-#
-#     else:
-#         return {"error": "Faqat matn formatidagi fayllarni qabul qilamiz!"}
+@app.post("/uploadEssential")
+async def upload_essential(book_id: int, file: UploadFile = File(...)):
+    if file.content_type == "text/plain":
+        content = await file.read()
+        content = content.decode('utf-8')
+        word_lists = content.split('\n')
+
+        try:
+            connection = psycopg2.connect(
+                host=host,
+                port=port,
+                database=database,
+                user=user,
+                password=password
+            )
+
+            cursor = connection.cursor()
+            word_count = 0  # So'zlar sonini hisoblash uchun o'zgaruvchi
+            unit_id = 0  # Unit_id 1 dan boshlansin
+
+            for i, word_list in enumerate(word_lists):
+                words = word_list.strip().split(',')
+
+                for word in words:
+                    if word.strip():  # Check if the word is not empty
+                        word_count += 1
+
+                        if word_count % 20 == 1:
+                            unit_id += 1
+
+                        translation_en = GoogleTranslator(source='en', target='uz').translate(word)
+                        translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
+                        cursor.execute(
+                            "INSERT INTO essential_words (translation_en, translation_ru, word, book_id, unit_id) VALUES (%s, %s, %s, %s, %s)",
+                            (translation_en.capitalize(), translation_ru.capitalize(), word, book_id, unit_id))
+
+                connection.commit()
+
+                # Check if we have reached 600 words
+                if word_count >= 600:
+                    break
+
+        except (Exception, psycopg2.Error) as error:
+            print("Xatolik yuz berdi:", error)
+
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+
+    else:
+        return {"error": "Faqat matn formatidagi fayllarni qabul qilamiz!"}
 
 
 if __name__ == "__main__":

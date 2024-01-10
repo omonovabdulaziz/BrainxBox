@@ -18,6 +18,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmailAndUniqueId(String email, String uniqueId);
     Page<User> findAllBySystemRoleName(SystemRoleName systemRoleName , Pageable pageable);
-    Boolean existsByEmailAndUniqueIdAndSystemRoleName(String email, String uniqueId, SystemRoleName systemRoleName);
-
 }
