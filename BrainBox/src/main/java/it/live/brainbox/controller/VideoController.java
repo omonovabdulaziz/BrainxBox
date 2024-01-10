@@ -24,7 +24,6 @@ public class VideoController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/getVideoPage")
     public Page<Video> getVideo(@RequestParam int page, @RequestParam int size) {
         return videoService.getVideo(page, size);

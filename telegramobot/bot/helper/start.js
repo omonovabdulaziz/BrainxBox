@@ -12,6 +12,8 @@ const start = async (chatId) => {
                     text: 'Seriallar'
                 }], [{
                     text: 'DeveloperModeEditor'
+                }, {
+                    text: 'Add Video'
                 }]], resize_keyboard: true
             }
         })
