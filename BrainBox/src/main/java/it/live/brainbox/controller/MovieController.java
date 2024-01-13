@@ -62,8 +62,8 @@ public class MovieController {
     }
 
     @GetMapping("/search-movie")
-    public List<Movie> searchMovie(@RequestParam String keyWord, @RequestParam(required = false) int page, @RequestParam(required = false) int size) {
-        return movieService.searchMovie(keyWord, page, size);
+    public List<Movie> searchMovie(@RequestParam String keyWord) {
+        return movieService.searchMovie(keyWord);
     }
 
 

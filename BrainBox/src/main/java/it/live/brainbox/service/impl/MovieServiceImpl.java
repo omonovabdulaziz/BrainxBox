@@ -159,7 +159,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> searchMovie(String keyWord, int page, int size) {
+    public List<Movie> searchMovie(String keyWord) {
         User user = SecurityConfiguration.getOwnSecurityInformation();
         List<Movie> movies = new ArrayList<>();
         List<Movie> pageMovie = movieRepository.findAllByNameLikeIgnoreCase("%" + keyWord + "%");

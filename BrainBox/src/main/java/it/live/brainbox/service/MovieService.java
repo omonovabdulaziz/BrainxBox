@@ -21,7 +21,7 @@ public interface MovieService {
 
     ResponseEntity<ApiResponse> deleteMovie(Long movie);
 
-    List<Movie> searchMovie(String keyWord , int page , int size);
+    List<Movie> searchMovie(String keyWord);
 
     List<Movie> getAllMovieBySerialId(Long serialId);
 
