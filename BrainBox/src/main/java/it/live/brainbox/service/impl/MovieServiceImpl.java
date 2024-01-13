@@ -12,18 +12,17 @@ import it.live.brainbox.entity.enums.Level;
 import it.live.brainbox.entity.enums.SystemRoleName;
 import it.live.brainbox.exception.MainException;
 import it.live.brainbox.exception.NotFoundException;
+import it.live.brainbox.mapper.MovieMapper;
 import it.live.brainbox.payload.ApiResponse;
 import it.live.brainbox.payload.MovieDTO;
 import it.live.brainbox.repository.BoughtMovieRepository;
 import it.live.brainbox.repository.MovieRepository;
 import it.live.brainbox.repository.RequestMovieRepository;
 import it.live.brainbox.repository.SerialRepository;
-import it.live.brainbox.mapper.MovieMapper;
 import it.live.brainbox.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -162,15 +161,16 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> searchMovie(String keyWord, int page, int size) {
         User user = SecurityConfiguration.getOwnSecurityInformation();
+        List<Movie> movies = new ArrayList<>();
         List<Movie> pageMovie = movieRepository.findAllByNameLikeIgnoreCase("%" + keyWord + "%");
         for (Movie movie : pageMovie) {
             movie.setIsBought(boughtMovieRepository.existsByUserIdAndMovieId(user.getId(), movie.getId()));
-            pageMovie.add(movie);
+            movies.add(movie);
         }
-        if (pageMovie.isEmpty()) {
+        if (movies.isEmpty()) {
             throw new NotFoundException("There is no movie with this name If you want it, please share the name of the movie with us");
         }
-        return pageMovie;
+        return movies;
     }
 
     @Override
