@@ -7,6 +7,7 @@ import it.live.brainbox.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,6 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public Page<Video> getVideo(int page, int size) {
-        return videoRepository.findAll(PageRequest.of(page, size));
+        return videoRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 }
