@@ -10,6 +10,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\PremiumController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\PremiumServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\PremiumService.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\utils\BrainBoxBot.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\SubtitleWordDTO.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\LanguageServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\exceptionHandler\ExceptionsHandler.java
@@ -17,7 +18,6 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\EssentialWords.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\ApiResponse.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\EssentialController.java
-C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\RequestMovie.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\jwt\JwtFilter.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\exception\NotFoundException.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\config\SecurityConfiguration.java
@@ -38,7 +38,6 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\LanguageController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\Movie.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\LanguageRepository.java
-C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\RequestMovieRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\enums\Level.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\EssentialRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\BoughtMovie.java
@@ -69,6 +68,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\Result.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\VideoServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\MovieService.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\utils\TelegramBotConfig.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\temp\AbsUUIDEntity.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\SerialServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\mapper\UserMapper.java

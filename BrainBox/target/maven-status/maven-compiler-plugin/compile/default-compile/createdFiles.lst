@@ -26,7 +26,6 @@ it\live\brainbox\payload\Result$ResultBuilder.class
 it\live\brainbox\service\impl\LanguageServiceImpl.class
 it\live\brainbox\payload\UserDTO$UserDTOBuilder.class
 it\live\brainbox\repository\SerialRepository.class
-it\live\brainbox\entity\RequestMovie$RequestMovieBuilder.class
 it\live\brainbox\entity\Language$LanguageBuilder.class
 it\live\brainbox\payload\WordDefinitionApiDTO.class
 it\live\brainbox\exceptionHandler\ExceptionsHandler.class
@@ -72,12 +71,10 @@ it\live\brainbox\entity\PremiumUser$PremiumUserBuilder.class
 it\live\brainbox\exception\NotFoundException.class
 it\live\brainbox\controller\LanguageController.class
 it\live\brainbox\entity\SubtitleWord$SubtitleWordBuilder.class
-it\live\brainbox\repository\RequestMovieRepository.class
 it\live\brainbox\payload\SubtitleWordPyDTO$SubtitleWordPyDTOBuilder.class
 it\live\brainbox\service\SavedWordService.class
 it\live\brainbox\entity\User$UserBuilder.class
 it\live\brainbox\mapper\MovieMapper.class
-it\live\brainbox\entity\RequestMovie.class
 it\live\brainbox\payload\WordDefinitionApiDTO$WordDefinitionApiDTOBuilder.class
 it\live\brainbox\payload\PageSender$PageSenderBuilder.class
 it\live\brainbox\repository\MovieRepository.class
@@ -101,6 +98,7 @@ it\live\brainbox\payload\SavedWordDto$SavedWordDtoBuilder.class
 it\live\brainbox\service\UserService.class
 it\live\brainbox\controller\MovieController.class
 it\live\brainbox\service\SerialService.class
+it\live\brainbox\utils\TelegramBotConfig.class
 it\live\brainbox\exception\MainException.class
 it\live\brainbox\payload\Pronunciation$PronunciationBuilder.class
 it\live\brainbox\entity\EssentialWords$EssentialWordsBuilder.class
@@ -108,5 +106,6 @@ it\live\brainbox\entity\enums\SystemRoleName.class
 it\live\brainbox\controller\SubtitlesController.class
 it\live\brainbox\controller\PremiumController.class
 it\live\brainbox\entity\temp\AbsUUIDEntity.class
+it\live\brainbox\utils\BrainBoxBot.class
 it\live\brainbox\controller\SerialController.class
 it\live\brainbox\entity\SavedWord.class

@@ -2,7 +2,6 @@ package it.live.brainbox.controller;
 
 
 import it.live.brainbox.entity.Movie;
-import it.live.brainbox.entity.RequestMovie;
 import it.live.brainbox.entity.enums.Level;
 import it.live.brainbox.payload.ApiResponse;
 import it.live.brainbox.payload.MovieDTO;
@@ -71,11 +70,5 @@ public class MovieController {
     @PostMapping("/addRequestMovie")
     public ResponseEntity<ApiResponse> addRequestMovie(@RequestParam String request) {
         return movieService.addRequest(request);
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/getAllRequestByPage")
-    public Page<RequestMovie> getAllRequestsByPage(@RequestParam int page, @RequestParam int size) {
-        return movieService.getAllRequestPage(page, size);
     }
 }

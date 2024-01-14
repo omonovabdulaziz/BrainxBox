@@ -6,7 +6,6 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import it.live.brainbox.config.SecurityConfiguration;
 import it.live.brainbox.entity.Movie;
-import it.live.brainbox.entity.RequestMovie;
 import it.live.brainbox.entity.User;
 import it.live.brainbox.entity.enums.Level;
 import it.live.brainbox.entity.enums.SystemRoleName;
@@ -17,16 +16,18 @@ import it.live.brainbox.payload.ApiResponse;
 import it.live.brainbox.payload.MovieDTO;
 import it.live.brainbox.repository.BoughtMovieRepository;
 import it.live.brainbox.repository.MovieRepository;
-import it.live.brainbox.repository.RequestMovieRepository;
 import it.live.brainbox.repository.SerialRepository;
 import it.live.brainbox.service.MovieService;
+import it.live.brainbox.utils.BrainBoxBot;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +42,8 @@ public class MovieServiceImpl implements MovieService {
     private final MovieMapper movieMapper;
     private final MovieRepository movieRepository;
     private final SerialRepository serialRepository;
-    private final RequestMovieRepository requestMovieRepository;
     private final BoughtMovieRepository boughtMovieRepository;
+    private final BrainBoxBot bot;
     private static final String apiKey = "4daf298e";
 
     @Override
@@ -175,14 +176,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public ResponseEntity<ApiResponse> addRequest(String request) {
-        requestMovieRepository.save(RequestMovie.builder().name(request).user(SecurityConfiguration.getOwnSecurityInformation()).build());
-        return ResponseEntity.ok(ApiResponse.builder().message("Your request has been approved. Our staff will review your request").status(200).build());
-    }
-
-    @Override
-    public Page<RequestMovie> getAllRequestPage(int page, int size) {
-        return requestMovieRepository.findAll(of(page, size, Sort.by("createdAt").descending()));
-
+        try {
+            bot.sendToChannel(SecurityConfiguration.getOwnSecurityInformation().getName(), request);
+        } catch (Exception e) {
+            throw new MainException("Xatalik");
+        }
+        return ResponseEntity.ok(ApiResponse.builder().status(200).message("Ok").build());
     }
 
 

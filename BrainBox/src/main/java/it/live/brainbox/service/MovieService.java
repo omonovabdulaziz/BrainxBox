@@ -1,7 +1,6 @@
 package it.live.brainbox.service;
 
 import it.live.brainbox.entity.Movie;
-import it.live.brainbox.entity.RequestMovie;
 import it.live.brainbox.entity.enums.Level;
 import it.live.brainbox.payload.ApiResponse;
 import it.live.brainbox.payload.MovieDTO;
@@ -26,6 +25,5 @@ public interface MovieService {
     List<Movie> getAllMovieBySerialId(Long serialId);
 
     ResponseEntity<ApiResponse> addRequest(String request);
-    Page<RequestMovie> getAllRequestPage(int page , int size);
 
 }

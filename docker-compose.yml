@@ -24,10 +24,3 @@ services:
     restart: always
     ports:
       - "3000:3000"
-  supportbot:
-    container_name: supportbot-container
-    build:
-      context: ./supportbot
-    restart: always
-    ports:
-      - "3001:3001"
