@@ -26,7 +26,8 @@ EXCLUDED_WORDS = {
     "he", "she", "i", "me", "my", "mine", "you",
     "his", "her", "hers", "its", "we", "us", "our", "ours",
     "your", "yours", "their", "theirs", "when", 'what', 'which', "how", "where", "who", "go", "thank's", "thank",
-    "what's", "which's", "that's", "not", "it's", "they", "it'll", "they'll", "we're", "he's", "those", "don't", "couldn't", "hey", "isn't", "shouldn't", "there's", "off", "she's", "who's",
+    "what's", "which's", "that's", "not", "it's", "they", "it'll", "they'll", "we're", "he's", "those", "don't",
+    "couldn't", "hey", "isn't", "shouldn't", "there's", "off", "she's", "who's",
 }
 translated_words = set()
 
@@ -82,7 +83,7 @@ def translate(data):
 
             for future in concurrent.futures.as_completed(futures):
                 entry = future.result()
-                if entry:
+                if entry and entry.word.lower() not in EXCLUDED_WORDS:
                     translated_entries[entry.word] = entry
                 pbar.update(1)
 
@@ -102,21 +103,23 @@ def try_different_encodings(file_content):
 
 
 def eliminate_patterns(text):
-    html_converter = html2text.HTML2Text()
-    html_converter.ignore_links = True
-    html_converter.ignore_images = True
-    html_converter.ignore_emphasis = True
+    # Extract words within HTML tags and store them
+    html_words = re.findall(r'<[^>]*>(.*?)<[^>]*>', text)
+    text = re.sub(r'<[^>]*>', '', text)  # Remove HTML tags
 
-    cleaned_text = html_converter.handle(text)
+    cleaned_text = text
 
     additional_patterns_to_eliminate = [
         r'\[', r'\]', r'\.',
-        r'<i>', r'\.<i>', r'\,</i>', r'\.</i>', r'\,</i>', r'</i>', r'.</i>', r',</i>',
+        r'\.<i>', r'\,</i>', r'\.</i>', r'\,</i>', r'</i>', r'.</i>', r',</i>',
     ]
 
     additional_pattern = '|'.join(re.escape(p) for p in additional_patterns_to_eliminate)
 
     cleaned_text = re.sub(additional_pattern, '', cleaned_text)
+
+    # Add extracted words back to the cleaned text
+    cleaned_text += ' '.join(html_words)
 
     return cleaned_text
 
