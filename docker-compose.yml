@@ -3,7 +3,7 @@ services:
   python-app:
     container_name: python-app-container
     build:
-      context: ./fastApiProject
+      context: ./pythonSub
     ports:
       - "8000:8000"
     restart: always
@@ -14,9 +14,6 @@ services:
     restart: always
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres
-      - python-app
   telegrambot:
     container_name: telegrambot-container
     build:

@@ -138,7 +138,7 @@ const add_movie = async (chatId) => {
                             headers, params: requestData,
                         });
 
-                        await bot.sendMessage(chatId, 'Subtitle uploaded successfully to ' + movieInfo.name, {
+                         bot.sendMessage(chatId, 'Subtitle uploaded successfully to ' + movieInfo.name, {
                             reply_markup: {
                                 inline_keyboard: [[{
                                     text: 'New Movie', callback_data: `add_movie`

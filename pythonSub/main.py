@@ -83,7 +83,7 @@ def translate(data):
 
             for future in concurrent.futures.as_completed(futures):
                 entry = future.result()
-                if entry and entry.word.lower() not in EXCLUDED_WORDS:
+                if entry:
                     translated_entries[entry.word] = entry
                 pbar.update(1)
 
@@ -103,23 +103,21 @@ def try_different_encodings(file_content):
 
 
 def eliminate_patterns(text):
-    # Extract words within HTML tags and store them
-    html_words = re.findall(r'<[^>]*>(.*?)<[^>]*>', text)
-    text = re.sub(r'<[^>]*>', '', text)  # Remove HTML tags
+    html_converter = html2text.HTML2Text()
+    html_converter.ignore_links = True
+    html_converter.ignore_images = True
+    html_converter.ignore_emphasis = True
 
-    cleaned_text = text
+    cleaned_text = html_converter.handle(text)
 
     additional_patterns_to_eliminate = [
         r'\[', r'\]', r'\.',
-        r'\.<i>', r'\,</i>', r'\.</i>', r'\,</i>', r'</i>', r'.</i>', r',</i>',
+        r'<i>', r'\.<i>', r'\,</i>', r'\.</i>', r'\,</i>', r'</i>', r'.</i>', r',</i>',
     ]
 
     additional_pattern = '|'.join(re.escape(p) for p in additional_patterns_to_eliminate)
 
     cleaned_text = re.sub(additional_pattern, '', cleaned_text)
-
-    # Add extracted words back to the cleaned text
-    cleaned_text += ' '.join(html_words)
 
     return cleaned_text
 
