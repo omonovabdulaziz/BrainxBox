@@ -95,7 +95,7 @@ public class MovieServiceImpl implements MovieService {
         User user = SecurityConfiguration.getOwnSecurityInformation();
         Page<Movie> movies;
         if (level != null) {
-            movies = movieRepository.findAllByLevel(level, PageRequest.of(page, size));
+            movies = movieRepository.findAllByLevel(level, PageRequest.of(page, size, Sort.by("createdAt").descending()));
         } else if (genre != null) {
             movies = movieRepository.findAllByGenre(genre, of(page, size));
         } else if (noSubtitle) {

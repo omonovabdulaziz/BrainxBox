@@ -13,12 +13,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Primary
 public class BrainBoxBot extends TelegramLongPollingBot {
 
-    private String botToken;
-    private DefaultBotOptions botOptions;
+    private final String botToken;
 
     public BrainBoxBot(@Value("${telegram.botToken}") String botToken, DefaultBotOptions botOptions) {
         this.botToken = botToken;
-        this.botOptions = botOptions;
     }
 
     public void sendToChannel(String name, String movieName) throws TelegramApiException {
