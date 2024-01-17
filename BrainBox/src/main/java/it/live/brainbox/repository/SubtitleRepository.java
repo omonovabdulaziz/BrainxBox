@@ -14,5 +14,5 @@ import java.util.UUID;
 public interface SubtitleRepository extends JpaRepository<SubtitleWord, UUID> {
     void deleteAllByMovieId(Long movie_id);
 
-    Page<SubtitleWord> findAllByMovieId(Long movie_id, Pageable pageable);
+    Page<SubtitleWord> findAllByMovieId(Long movie_id, PageRequest pageRequest);
 }

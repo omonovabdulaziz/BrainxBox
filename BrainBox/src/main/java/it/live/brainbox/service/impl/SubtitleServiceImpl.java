@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static org.springframework.data.domain.PageRequest.of;
+
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class SubtitleServiceImpl implements SubtitleService {
 
     @Override
     public Page<?> getWordsByCount(long movieId, int page, int size) {
-        return subtitleRepository.findAllByMovieId(movieId, PageRequest.of(page, size, Sort.by("count").ascending()));
+        return subtitleRepository.findAllByMovieId(movieId, of(page, size));
     }
 
     @Override
