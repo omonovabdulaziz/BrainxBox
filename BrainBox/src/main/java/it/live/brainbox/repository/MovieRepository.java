@@ -13,9 +13,9 @@ import java.util.Collection;
 import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    Page<Movie> findAllByGenre(String genre, Pageable pageable);
+    Page<Movie> findAllByGenre(String genre, PageRequest pageRequest);
 
-    Page<Movie> findAllByLevel(Level level, Pageable pageable);
+    Page<Movie> findAllByLevel(Level level, PageRequest pageRequest);
 
     List<Movie> findAllBySerialId(Long serial_id);
 
