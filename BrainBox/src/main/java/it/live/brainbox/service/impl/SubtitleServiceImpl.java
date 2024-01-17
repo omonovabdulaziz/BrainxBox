@@ -41,7 +41,6 @@ public class SubtitleServiceImpl implements SubtitleService {
     public ResponseEntity<ApiResponse> addSubtitle(Long movieId, MultipartFile file) {
         if (wordDefinitionApi.addSubtitle(movieId, file))
             return ResponseEntity.ok(ApiResponse.builder().message("Added subtitles for this movie").status(200).build());
-
         throw new MainException("Error in process for add movie");
     }
 

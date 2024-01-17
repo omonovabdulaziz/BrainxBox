@@ -20,4 +20,4 @@ services:
       context: ./telegramobot
     restart: always
     ports:
-      - "3000:3000"
+      - "8090:8090"

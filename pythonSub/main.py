@@ -10,14 +10,6 @@ from fastapi.responses import JSONResponse
 from langdetect import detect
 from tqdm import tqdm
 
-# database
-# host =
-# port =
-# database =
-# user =
-# password =
-
-# translate
 app = FastAPI()
 
 EXCLUDED_WORDS = {
@@ -65,11 +57,10 @@ def remove_non_english_words(data):
 
 
 def translate_word_threaded(word, count):
-    if word.lower() in translated_words:
+    if word.lower() in EXCLUDED_WORDS:
         return None
     translation_en = GoogleTranslator(source='en', target='uz').translate(word)
     translation_ru = GoogleTranslator(source='en', target='ru').translate(word)
-    translated_words.add(word.lower())
     return TranslationEntry(word.upper(), count, translation_en.capitalize(), translation_ru.capitalize())
 
 
@@ -140,6 +131,9 @@ async def upload_subtitle(subtitle_file: UploadFile = File(...)):
         return JSONResponse(content={"message": f"Error processing file: {str(e)}"}, status_code=500)
 
 
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
 # @app.post("/uploadEssential")
 # async def upload_essential(book_id: int, file: UploadFile = File(...)):
 #     if file.content_type == "text/plain":
@@ -192,7 +186,3 @@ async def upload_subtitle(subtitle_file: UploadFile = File(...)):
 #
 #     else:
 #         return {"error": "Faqat matn formatidagi fayllarni qabul qilamiz!"}
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
