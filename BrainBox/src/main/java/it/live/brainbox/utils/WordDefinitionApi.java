@@ -18,7 +18,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -55,7 +57,12 @@ public class WordDefinitionApi {
                     fastApiUrl + "/uploadSubtitle", requestEntity, Result.class).getBody();
 
             assert apiResponse != null;
+
+            // Yuborilgan so'zni tekshirish uchun qo'shildi
+            Set<String> sentWords = new HashSet<>();
+
             List<CompletableFuture<Void>> futureTasks = apiResponse.getResult().stream()
+                    .filter(subtitleWordPyDTO -> sentWords.add(subtitleWordPyDTO.getWord())) // Faqat bitta marta yuborish uchun
                     .map(subtitleWordPyDTO -> processSubtitleWordAsync(movieId, subtitleWordPyDTO))
                     .toList();
 
@@ -67,6 +74,7 @@ public class WordDefinitionApi {
             return false;
         }
     }
+
 
     private CompletableFuture<Void> processSubtitleWordAsync(Long movieId, SubtitleWordPyDTO subtitleWordPyDTO) {
         return CompletableFuture.runAsync(() -> {
