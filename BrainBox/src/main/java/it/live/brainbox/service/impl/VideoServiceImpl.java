@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.data.domain.PageRequest.of;
+
 @Service
 @RequiredArgsConstructor
 public class VideoServiceImpl implements VideoService {
@@ -24,6 +26,6 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public Page<Video> getVideo(int page, int size) {
-        return videoRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
+        return videoRepository.findAll(of(page, size, Sort.by("createdAt").descending()));
     }
 }

@@ -21,13 +21,10 @@ import it.live.brainbox.service.MovieService;
 import it.live.brainbox.utils.BrainBoxBot;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.bots.DefaultBotOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,11 +92,11 @@ public class MovieServiceImpl implements MovieService {
         User user = SecurityConfiguration.getOwnSecurityInformation();
         Page<Movie> movies;
         if (level != null) {
-            movies = movieRepository.findAllByLevel(level, PageRequest.of(page, size, Sort.by("createdAt").descending()));
+            movies = movieRepository.findAllByLevel(level, of(page, size, Sort.by("createdAt").descending()));
         } else if (genre != null) {
             movies = movieRepository.findAllByGenre(genre, of(page, size));
         } else if (noSubtitle) {
-            movies = movieRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
+            movies = movieRepository.findAll(of(page, size, Sort.by("createdAt").descending()));
         } else {
             movies = movieRepository.findAll(of(page, size, Sort.by("createdAt").descending()));
         }
