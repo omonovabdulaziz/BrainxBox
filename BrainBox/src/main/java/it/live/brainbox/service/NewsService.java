@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
+
 
 public interface NewsService {
 
@@ -19,4 +21,6 @@ public interface NewsService {
     ResponseEntity<ApiResponse> addSeen(Long newsId);
 
     News getLastNews();
+
+    ResponseEntity<?> viewOneFile(Long newsId) throws MalformedURLException;
 }

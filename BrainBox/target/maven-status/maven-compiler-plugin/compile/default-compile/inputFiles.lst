@@ -36,11 +36,13 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\VideoRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\BoughtMovieController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\LanguageDTO.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\SeenNewsRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\UserDTO.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\Serial.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\LanguageController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\Movie.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\LanguageRepository.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\NewsServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\NewsService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\enums\Level.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\EssentialRepository.java
@@ -63,6 +65,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\MovieRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\UserService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\jwt\JwtProvider.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\mapper\SeenNewsMapper.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\Language.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\mapper\LanguageMapper.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\exception\MainException.java

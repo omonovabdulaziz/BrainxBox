@@ -3,21 +3,21 @@ package it.live.brainbox.controller;
 import it.live.brainbox.entity.News;
 import it.live.brainbox.payload.ApiResponse;
 import it.live.brainbox.service.NewsService;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.ws.rs.Path;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.net.MalformedURLException;
 
 @RestController
 @RequestMapping("/api/v1/news")
 @RequiredArgsConstructor
 public class NewsController {
     private final NewsService newsService;
-
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addNews")
@@ -37,7 +37,6 @@ public class NewsController {
     }
 
     @PostMapping("/seen/{newsId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<ApiResponse> addSeen(@PathVariable Long newsId) {
         return newsService.addSeen(newsId);
     }
@@ -45,5 +44,10 @@ public class NewsController {
     @GetMapping("getLastNews")
     public News getOne() {
         return newsService.getLastNews();
+    }
+
+    @GetMapping("/viewOneFile")
+    public ResponseEntity<?> viewOneFile(@RequestParam Long newsId) throws MalformedURLException {
+        return newsService.viewOneFile(newsId);
     }
 }

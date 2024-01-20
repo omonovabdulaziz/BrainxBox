@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class BrainBoxApplication {
     public static void main(String[] args) {
-            SpringApplication.run(BrainBoxApplication.class , args);
+        SpringApplication.run(BrainBoxApplication.class, args);
     }
-
 }
