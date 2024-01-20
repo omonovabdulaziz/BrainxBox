@@ -1,4 +1,5 @@
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\enums\SystemRoleName.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\NewsRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\SubtitleServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\LanguageService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\PremiumUser.java
@@ -6,6 +7,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\AuthService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\mapper\MovieMapper.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\MovieServiceImpl.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\NewsController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\BoughtService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\PremiumController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\PremiumServiceImpl.java
@@ -28,6 +30,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\UserController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\UserRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\BrainBoxApplication.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\News.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\SavedWordDto.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\SubtitlesController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\VideoRepository.java
@@ -38,6 +41,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\controller\LanguageController.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\Movie.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\LanguageRepository.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\NewsService.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\enums\Level.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\repository\EssentialRepository.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\BoughtMovie.java
@@ -68,6 +72,7 @@ C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\payload\Result.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\VideoServiceImpl.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\MovieService.java
+C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\SeenNews.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\utils\TelegramBotConfig.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\entity\temp\AbsUUIDEntity.java
 C:\Users\user\Desktop\BigProjects\brain\BrainBox\src\main\java\it\live\brainbox\service\impl\SerialServiceImpl.java

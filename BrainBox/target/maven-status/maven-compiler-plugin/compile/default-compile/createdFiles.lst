@@ -42,7 +42,9 @@ it\live\brainbox\service\impl\SubtitleServiceImpl.class
 it\live\brainbox\payload\MovieDTO.class
 it\live\brainbox\service\VideoService.class
 it\live\brainbox\service\AuthService.class
+it\live\brainbox\entity\News.class
 it\live\brainbox\service\LanguageService.class
+it\live\brainbox\entity\SeenNews.class
 it\live\brainbox\controller\BoughtMovieController.class
 it\live\brainbox\entity\enums\Level.class
 it\live\brainbox\entity\temp\AbsLongEntity.class
@@ -56,6 +58,7 @@ it\live\brainbox\repository\LanguageRepository.class
 it\live\brainbox\payload\SubtitleWordDTO.class
 it\live\brainbox\service\impl\PremiumServiceImpl.class
 it\live\brainbox\payload\ApiResponse.class
+it\live\brainbox\entity\News$NewsBuilder.class
 it\live\brainbox\payload\SubtitleWordDTO$SubtitleWordDTOBuilder.class
 it\live\brainbox\config\SecurityConfiguration.class
 it\live\brainbox\entity\Video.class
@@ -77,10 +80,12 @@ it\live\brainbox\entity\User$UserBuilder.class
 it\live\brainbox\mapper\MovieMapper.class
 it\live\brainbox\payload\WordDefinitionApiDTO$WordDefinitionApiDTOBuilder.class
 it\live\brainbox\payload\PageSender$PageSenderBuilder.class
+it\live\brainbox\service\NewsService.class
 it\live\brainbox\repository\MovieRepository.class
 it\live\brainbox\entity\BoughtMovie.class
 it\live\brainbox\service\SubtitleService.class
 it\live\brainbox\repository\SavedWordRepository.class
+it\live\brainbox\entity\SeenNews$SeenNewsBuilder.class
 it\live\brainbox\entity\Video$VideoBuilder.class
 it\live\brainbox\service\impl\SavedWordServiceImpl.class
 it\live\brainbox\payload\Pronoun$PronounBuilder.class
@@ -97,10 +102,12 @@ it\live\brainbox\payload\WordDefClass.class
 it\live\brainbox\payload\SavedWordDto$SavedWordDtoBuilder.class
 it\live\brainbox\service\UserService.class
 it\live\brainbox\controller\MovieController.class
+it\live\brainbox\controller\NewsController.class
 it\live\brainbox\service\SerialService.class
 it\live\brainbox\utils\TelegramBotConfig.class
 it\live\brainbox\exception\MainException.class
 it\live\brainbox\payload\Pronunciation$PronunciationBuilder.class
+it\live\brainbox\repository\NewsRepository.class
 it\live\brainbox\entity\EssentialWords$EssentialWordsBuilder.class
 it\live\brainbox\entity\enums\SystemRoleName.class
 it\live\brainbox\controller\SubtitlesController.class
