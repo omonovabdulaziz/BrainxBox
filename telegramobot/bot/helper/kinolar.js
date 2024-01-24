@@ -114,6 +114,8 @@ const add_movie = async (chatId) => {
                 const id = response.data.object; // Get the ID from the response
                 await bot.sendMessage(chatId, 'Iltimos subtitleni yuklang');
                 bot.once('document', async (msg) => {
+
+
                     const documentId = msg.document.file_id;
                     const file = await bot.getFile(documentId);
 

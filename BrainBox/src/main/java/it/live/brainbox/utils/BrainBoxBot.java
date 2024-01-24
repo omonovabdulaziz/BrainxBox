@@ -44,7 +44,7 @@ public class BrainBoxBot extends TelegramLongPollingBot {
                     execute(new SendMessage(String.valueOf(chatId), "Assalomu alaykum hurmatli " + firstName + ". Takliflaringizni yuboring"));
                 } else {
                     execute(new SendMessage(String.valueOf(chatId), "Taklifingiz uchun rahmat hurmatli " + firstName + ". Biz tez orada taklifingizni ko'rib chiqamiz😊"));
-                    execute(new SendMessage("@whatthefuckiston", "chatId = " + chatId + "\n username = " + update.getMessage().getChat().getUserName() + "\n name = " + firstName + "\n message = " + text + "\n type = PersonalSuggest"));
+                    execute(new SendMessage("@whatthefuckiston", "chatId = " + chatId + "\n username = @"+update.getMessage().getChat().getUserName() + "\n name = " + firstName + "\n message = " + text + "\n type = PersonalSuggest"));
                 }
             } catch (TelegramApiException e) {
                 e.printStackTrace();
