@@ -1,5 +1,6 @@
 package it.live.brainbox.service.impl;
 
+import com.sun.tools.javac.Main;
 import it.live.brainbox.config.SecurityConfiguration;
 import it.live.brainbox.entity.News;
 import it.live.brainbox.entity.User;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
@@ -38,18 +40,17 @@ public class NewsServiceImpl implements NewsService {
     private final SeenNewsRepository seenNewsRepository;
     private final SeenNewsMapper seenNewsMapper;
 
+    private static final String MAIN_UPLOAD_DIRECTORY = "src/main/resources/documents";
 
     public ResponseEntity<ApiResponse> add(String title, String dialog, MultipartFile multipartFile) {
-        if (newsRepository.existsByTitle(title)) throw new MainException("Bunday title mavjud");
-
         String fileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
         News news = News.builder().title(title).dialog(dialog).build();
         try {
-            Path uploadDirectory = Paths.get("document");
+            Path uploadDirectory = Paths.get(MAIN_UPLOAD_DIRECTORY);
             if (!Files.exists(uploadDirectory)) Files.createDirectories(uploadDirectory);
             Path filePath = uploadDirectory.resolve(fileName);
             multipartFile.transferTo(filePath);
-            news.setImageUrl(filePath.toAbsolutePath().toString());
+            news.setImageUrl(MAIN_UPLOAD_DIRECTORY + File.separator + fileName);
         } catch (Exception e) {
             throw new MainException("Image Upload Exception");
         }
@@ -76,12 +77,12 @@ public class NewsServiceImpl implements NewsService {
 
         try {
             String fileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
-            Path uploadDirectory = Paths.get("document");
+            Path uploadDirectory = Paths.get(MAIN_UPLOAD_DIRECTORY);
             if (!Files.exists(uploadDirectory)) Files.createDirectories(uploadDirectory);
 
             Path filePath = uploadDirectory.resolve(fileName);
             multipartFile.transferTo(filePath);
-            news.setImageUrl(filePath.toAbsolutePath().toString());
+            news.setImageUrl(MAIN_UPLOAD_DIRECTORY + File.separator + fileName);
             news.setDialog(dialog);
             news.setTitle(title);
             newsRepository.save(news);
