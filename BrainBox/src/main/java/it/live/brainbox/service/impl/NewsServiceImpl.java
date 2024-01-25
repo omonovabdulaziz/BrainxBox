@@ -40,7 +40,7 @@ public class NewsServiceImpl implements NewsService {
     private final SeenNewsRepository seenNewsRepository;
     private final SeenNewsMapper seenNewsMapper;
 
-    private static final String MAIN_UPLOAD_DIRECTORY = "src/main/resources/documents";
+    private static final String MAIN_UPLOAD_DIRECTORY = "documents";
 
     public ResponseEntity<ApiResponse> add(String title, String dialog, MultipartFile multipartFile) {
         String fileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
