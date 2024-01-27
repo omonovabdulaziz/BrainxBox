@@ -49,7 +49,8 @@ public class SecurityConfiguration {
                 auth
                         .requestMatchers("/api/v1/auth/**",
                                 "/swagger-ui/**",
-                                "/api/v1/video").permitAll()
+                                "/api/v1/video",
+                                "/api/v1/news/image").permitAll()
                         .anyRequest()
                         .authenticated());
         httpSecurity.sessionManagement(httpsecure -> httpsecure.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

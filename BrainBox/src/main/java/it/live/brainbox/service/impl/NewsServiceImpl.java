@@ -41,6 +41,7 @@ public class NewsServiceImpl implements NewsService {
     private final SeenNewsMapper seenNewsMapper;
 
     private static final String MAIN_UPLOAD_DIRECTORY = "documents";
+    private static final String BaseUrl = "http://137.184.14.168:8080/";
 
     public ResponseEntity<ApiResponse> add(String title, String dialog, MultipartFile multipartFile) {
         String fileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
@@ -50,7 +51,7 @@ public class NewsServiceImpl implements NewsService {
             if (!Files.exists(uploadDirectory)) Files.createDirectories(uploadDirectory);
             Path filePath = uploadDirectory.resolve(fileName);
             multipartFile.transferTo(filePath);
-            news.setImageUrl(MAIN_UPLOAD_DIRECTORY + File.separator + fileName);
+            news.setImageUrl(BaseUrl + "api/v1/news&path=" + MAIN_UPLOAD_DIRECTORY + File.separator + fileName);
         } catch (Exception e) {
             throw new MainException("Image Upload Exception");
         }
@@ -82,7 +83,7 @@ public class NewsServiceImpl implements NewsService {
 
             Path filePath = uploadDirectory.resolve(fileName);
             multipartFile.transferTo(filePath);
-            news.setImageUrl(MAIN_UPLOAD_DIRECTORY + File.separator + fileName);
+            news.setImageUrl(BaseUrl + "api/v1/news&path=" + MAIN_UPLOAD_DIRECTORY + File.separator + fileName);
             news.setDialog(dialog);
             news.setTitle(title);
             newsRepository.save(news);
@@ -110,12 +111,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public ResponseEntity<?> viewOneFile(Long newsId) throws MalformedURLException {
-        News news = newsRepository.findById(newsId).orElseThrow(() -> new NotFoundException("Not found"));
+    public ResponseEntity<?> viewOneFile(String path) throws MalformedURLException {
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; fileName=\"" + URLEncoder.encode(news.getImageUrl(), StandardCharsets.UTF_8)).
-                body(new FileUrlResource(String.format(news.getImageUrl())));
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; fileName=\"" + URLEncoder.encode(path, StandardCharsets.UTF_8)).
+                body(new FileUrlResource(path));
     }
 
 

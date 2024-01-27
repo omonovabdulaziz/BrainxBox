@@ -22,5 +22,5 @@ public interface NewsService {
 
     News getLastNews();
 
-    ResponseEntity<?> viewOneFile(Long newsId) throws MalformedURLException;
+    ResponseEntity<?> viewOneFile(String path) throws MalformedURLException;
 }

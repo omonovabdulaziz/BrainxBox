@@ -41,13 +41,13 @@ public class NewsController {
         return newsService.addSeen(newsId);
     }
 
-    @GetMapping("getLastNews")
+    @GetMapping("/getLastNews")
     public News getOne() {
         return newsService.getLastNews();
     }
 
-    @GetMapping("/viewOneFile")
-    public ResponseEntity<?> viewOneFile(@RequestParam Long newsId) throws MalformedURLException {
-        return newsService.viewOneFile(newsId);
+    @GetMapping("/image")
+    public ResponseEntity<?> viewOneFile(@RequestParam String path) throws MalformedURLException {
+        return newsService.viewOneFile(path);
     }
 }
