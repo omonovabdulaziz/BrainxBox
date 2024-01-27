@@ -51,7 +51,7 @@ public class NewsServiceImpl implements NewsService {
             if (!Files.exists(uploadDirectory)) Files.createDirectories(uploadDirectory);
             Path filePath = uploadDirectory.resolve(fileName);
             multipartFile.transferTo(filePath);
-            news.setImageUrl(BaseUrl + "api/v1/news&path=" + MAIN_UPLOAD_DIRECTORY + File.separator + fileName);
+            news.setImageUrl(BaseUrl + "api/v1/news/image?path=" + MAIN_UPLOAD_DIRECTORY + File.separator + fileName);
         } catch (Exception e) {
             throw new MainException("Image Upload Exception");
         }
