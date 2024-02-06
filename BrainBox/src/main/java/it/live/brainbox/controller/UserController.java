@@ -19,8 +19,8 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN' , 'ROLE_USER')")
     @PutMapping("/updateUser")
-    public ResponseEntity<ApiResponse> updateUser(@RequestParam Long userId, @RequestBody(required = false) UserDTO userDTO , @RequestParam Integer coinCount) {
-        return userService.updateUser(userId, userDTO , coinCount);
+    public ResponseEntity<ApiResponse> updateUser(@RequestParam Long userId, @RequestBody(required = false) UserDTO userDTO, @RequestParam Integer coinCount) {
+        return userService.updateUser(userId, userDTO, coinCount);
     }
 
 
@@ -34,5 +34,10 @@ public class UserController {
     @GetMapping("/getAllUserByPage")
     public Page<?> getAllUserByPage(@RequestParam int page, @RequestParam int size) {
         return userService.getAllUserByPage(page, size);
+    }
+
+    @DeleteMapping("/deleteMyAccount")
+    public ResponseEntity<ApiResponse> deleteMyAccount() {
+        return userService.deleteMyAccount();
     }
 }

@@ -3,12 +3,14 @@ package it.live.brainbox.service.impl;
 import it.live.brainbox.config.SecurityConfiguration;
 import it.live.brainbox.entity.User;
 import it.live.brainbox.entity.enums.SystemRoleName;
+import it.live.brainbox.exception.MainException;
 import it.live.brainbox.exception.NotFoundException;
 import it.live.brainbox.payload.ApiResponse;
 import it.live.brainbox.payload.UserDTO;
 import it.live.brainbox.repository.UserRepository;
 import it.live.brainbox.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.security.SecurityConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +57,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findAllBySystemRoleName(SystemRoleName.ROLE_USER, PageRequest.of(page, size));
     }
 
-
+    @Override
+    public ResponseEntity<ApiResponse> deleteMyAccount() {
+        try {
+            userRepository.delete(SecurityConfiguration.getOwnSecurityInformation());
+        } catch (Exception e) {
+            throw new MainException("Error");
+        }
+        return ResponseEntity.ok(ApiResponse.builder().message("Deleted").status(200).build());
+    }
 }

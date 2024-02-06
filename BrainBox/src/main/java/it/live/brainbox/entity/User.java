@@ -1,15 +1,19 @@
 package it.live.brainbox.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.live.brainbox.entity.enums.SystemRoleName;
 import it.live.brainbox.entity.temp.AbsLongEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -36,6 +40,24 @@ public class User extends AbsLongEntity implements UserDetails {
     private Boolean isAccountNonExpired;
     private Boolean isAccountNonLocked;
     private Boolean isCredentialsNonExpired;
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<BoughtMovie> boughtMovies;
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SeenNews> news;
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<PremiumUser> premiumUsers;
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SavedWord> savedWords;
+
+
 
 
     @Override

@@ -15,4 +15,6 @@ public interface UserService {
 
     Page<?> getAllUserByPage(int page, int size);
 
+    ResponseEntity<ApiResponse> deleteMyAccount();
+
 }
