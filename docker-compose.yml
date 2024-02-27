@@ -21,3 +21,13 @@ services:
     restart: always
     ports:
       - "8090:8090"
+  postgres:
+    container_name: postgres-container
+    image: "postgres:15"
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: brainbox
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: omonov2006
