@@ -13,7 +13,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="defaultdb@db-postgresql-nyc3-81237-do-user-15462980-0.c.db.ondigitalocean.com" uuid="a43668c7-4ace-480f-ab0e-f30c8b80a138">
+    <data-source source="LOCAL" name="defaultdb@db-postgresql-nyc3-81237-do-user-15462980-0.c.db.ondigitalocean.com" uuid="693dca38-ddc8-431b-8a68-fe2356f40600">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
