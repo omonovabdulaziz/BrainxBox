@@ -13,7 +13,7 @@ services:
       context: ./BrainBox
     restart: always
     ports:
-      - "8080:8080"
+      - "8888:8888"
   telegrambot:
     container_name: telegrambot-container
     build:
